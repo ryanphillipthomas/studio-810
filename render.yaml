@@ -1,14 +1,19 @@
 # Deployment source of truth (docs/sources-of-truth.md).
 #
-# One static site serves the whole umbrella: wearestudio810.com routes sub-apps by path
-# (wearestudio810.com/poc), so tools/site-compose copies the committed app
-# directories into dist/ per its site-map.json. COPY-ONLY — nothing is
-# generated or rewritten at deploy time: what was reviewed is what deploys.
+# One static site serves the whole umbrella: the service routes sub-apps by
+# path (/poc), so tools/site-compose copies the committed app directories into
+# dist/ per its site-map.json. COPY-ONLY — nothing is generated or rewritten at
+# deploy time: what was reviewed is what deploys.
+#
+# This blueprint deploys to wearestudio810.onrender.com. The public site at
+# wearestudio810.com is a separate Squarespace property, not served from this
+# repository — nothing here affects it.
 #
 # PR previews come from Render's *service previews*, enabled in the dashboard
 # (Service -> Previews -> Automatic). There is no render.yaml field for them:
-# this file cannot turn them on, and for the first thirteen PRs it did not —
-# the line that used to sit here claimed otherwise and was wrong.
+# this file cannot turn them on. They were enabled for this service on
+# 2026-08-31; note that a service recreated under a new name starts with
+# previews off again, so re-enable after any rename.
 #
 # The `previews` block below is a different feature: preview *environments*,
 # which clone every service in the blueprint. Harmless while this blueprint
