@@ -1,0 +1,32 @@
+{
+  "deployId": "dep-daavrgoae00c73deuh3g",
+  "environment": "production",
+  "service": {
+    "id": "srv-daarb8rtqb8s73dvucm0",
+    "name": "studio-810",
+    "publicUrl": "https://wearestudio810.onrender.com"
+  },
+  "expectedSha": "b3b49e9c876ba06302fd1335cbc70ce7092d7fd0",
+  "deploy": {
+    "status": "live",
+    "servingSha": "b3b49e9c876ba06302fd1335cbc70ce7092d7fd0",
+    "finishedAt": "2026-08-31T22:18:51.96185Z"
+  },
+  "health": {
+    "httpStatus": 200,
+    "tlsValid": true,
+    "certificateSubject": "CN=onrender.com",
+    "checkedUrl": "https://wearestudio810.onrender.com",
+    "contentMarker": "<title>Studio 810</title>"
+  },
+  "customDomains": [],
+  "infraDrift": [
+    {
+      "setting": "name",
+      "declared": "wearestudio810",
+      "actual": "studio-810",
+      "authority": "repo"
+    }
+  ],
+  "outcome": "degraded"
+}
