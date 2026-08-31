@@ -2,16 +2,19 @@
 // drift-check — the design-drift gate. See docs/drift-gate.md.
 //
 // Checks, in order:
-//   1. Token integrity: both token files parse; connect tokens are either
-//      connect.* additions or explicit overrides ("override": true) of an
-//      existing studio810 path. Silent parent redefinition = drift.
+//   1. Token integrity: every token file under design/tokens/ parses. The
+//      studio810 layer is the parent; every other directory there is a child
+//      layer whose namespace is its directory name. A child token must be
+//      either a <namespace>.* addition or an explicit override
+//      ("override": true) of an existing studio810 path. Silent parent
+//      redefinition = drift. Zero child layers is valid.
 //   2. Raw-value scan: app/package source may not contain literal colors or
 //      hard-coded typography/spacing pixel values that don't correspond to a
 //      published token value.
 //
 // Exit 0 = clean. Exit 1 = drift, with a file/line report.
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const ROOT = new URL('../..', import.meta.url).pathname;
@@ -44,29 +47,56 @@ function flatten(obj, prefix = '', out = new Map()) {
   return out;
 }
 
-const studio810Tokens = loadTokens('design/tokens/studio810/tokens.json');
-const connectTokens = loadTokens('design/tokens/connect/tokens.json');
+const PARENT = 'studio810';
 
+const studio810Tokens = loadTokens(`design/tokens/${PARENT}/tokens.json`);
 const studio810Flat = studio810Tokens ? flatten(studio810Tokens) : new Map();
-const connectFlat = connectTokens ? flatten(connectTokens) : new Map();
 
-for (const [path, token] of connectFlat) {
-  const isNamespaced = path.startsWith('connect.');
-  const isOverride = token.override === true;
-  if (!isNamespaced && !isOverride) {
-    fail('design/tokens/connect/tokens.json', `"${path}" is neither connect.* nor an explicit override — silent parent redefinition is drift`);
+// Every directory under design/tokens/ other than the parent is a child layer,
+// namespaced by its directory name. None today; the rule holds when one lands.
+function childLayers() {
+  const dir = join(ROOT, 'design/tokens');
+  try {
+    return readdirSync(dir)
+      .filter((entry) => entry !== PARENT && statSync(join(dir, entry)).isDirectory())
+      .sort();
+  } catch (err) {
+    fail('design/tokens/', `unreadable: ${err.message}`);
+    return [];
   }
-  if (isOverride) {
-    const target = token.overrides;
-    if (!target || !studio810Flat.has(target)) {
-      fail('design/tokens/connect/tokens.json', `override "${path}" must name an existing studio810 path in "overrides" (got: ${target ?? 'nothing'})`);
+}
+
+const childFlats = [];
+for (const namespace of childLayers()) {
+  const rel = `design/tokens/${namespace}/tokens.json`;
+  if (!existsSync(join(ROOT, rel))) {
+    fail(`design/tokens/${namespace}/`, 'child token layer has no tokens.json');
+    continue;
+  }
+  const tokens = loadTokens(rel);
+  if (!tokens) continue;
+  const flat = flatten(tokens);
+  childFlats.push(flat);
+
+  for (const [path, token] of flat) {
+    const isNamespaced = path.startsWith(`${namespace}.`);
+    const isOverride = token.override === true;
+    if (!isNamespaced && !isOverride) {
+      fail(rel, `"${path}" is neither ${namespace}.* nor an explicit override — silent parent redefinition is drift`);
+    }
+    if (isOverride) {
+      const target = token.overrides;
+      if (!target || !studio810Flat.has(target)) {
+        fail(rel, `override "${path}" must name an existing ${PARENT} path in "overrides" (got: ${target ?? 'nothing'})`);
+      }
     }
   }
 }
 
 // ---------------------------------------------------------- 2. raw values
 const publishedValues = new Set(
-  [...studio810Flat.values(), ...connectFlat.values()]
+  [studio810Flat, ...childFlats]
+    .flatMap((flat) => [...flat.values()])
     .map((t) => String(t.value).toLowerCase())
 );
 
