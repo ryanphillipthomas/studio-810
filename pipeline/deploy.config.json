@@ -10,14 +10,14 @@
       "serviceId": "srv-daatuq7qj5pc73b9c9sg",
       "publicUrl": "https://staging.wearestudio810.com",
       "contentMarker": "<title>Studio 810</title>",
-      "serviceName": "wearestudio810-staging"
+      "serviceName": "studio-810-staging"
     },
     "production": {
       "branch": "main",
       "serviceId": "srv-daarb8rtqb8s73dvucm0",
       "publicUrl": "https://wearestudio810.onrender.com",
       "contentMarker": "<title>Studio 810</title>",
-      "serviceName": "wearestudio810"
+      "serviceName": "studio-810"
     }
   }
 }
