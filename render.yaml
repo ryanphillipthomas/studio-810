@@ -9,11 +9,18 @@
 # wearestudio810.com is a separate Squarespace property, not served from this
 # repository — nothing here affects it.
 #
-# PR previews come from Render's *service previews*, enabled in the dashboard
-# (Service -> Previews -> Automatic). There is no render.yaml field for them:
-# this file cannot turn them on. They were enabled for this service on
-# 2026-08-31; note that a service recreated under a new name starts with
-# previews off again, so re-enable after any rename.
+# PR previews come from Render's *service previews*, a dashboard toggle with
+# no render.yaml field: this file cannot turn them on. As of 2026-08-31 they
+# are OFF for this service by choice; deploy.config.json and the release
+# records are where actual dashboard state is checked. A service recreated
+# under a new name starts with previews off again.
+#
+# The dashboard display names are "studio-810" (this service) and
+# "studio-810-staging" — intentional, 2026-08-31. The `name` below stays
+# `wearestudio810` on purpose: it is the blueprint identity and the source of
+# the onrender.com slug, and renaming it in a blueprint risks recreating the
+# service (new slug, toggles reset). pipeline/deploy.config.json declares the
+# display names the deploy gate checks against.
 #
 # The `previews` block below is a different feature: preview *environments*,
 # which clone every service in the blueprint. Harmless while this blueprint
