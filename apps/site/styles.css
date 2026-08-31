@@ -7,33 +7,50 @@
  * does a value left stale after a token changes. Update this block only by
  * re-copying from the mirror after a Design-role sync.
  *
- * Design-system gap (docs/drift-gate.md): the foundation publishes no display
- * face, so the wordmark is set in the same family as everything else. When a
- * studio810/type/display variable lands in Figma, sync and use it here. */
+ * The former design-system gap here is closed: the foundation now publishes
+ * studio810/type/family-display (Marcellus) and size-wordmark, measured from
+ * the live site, and the wordmark uses them. */
 
 :root {
-  --color-on-primary: #ffffff;
-  --color-on-surface: #1a1a1a;
-  --color-primary: #1a1a1a;
-  --color-surface: #ffffff;
-  --radius-control: 8px;
-  --space-control-x: 20px;
-  --space-control-y: 12px;
-  --type-family: 'Inter';
-  --type-size-heading: 32px;
-  --type-size-label: 16px;
-  --type-weight-label: 600;
+  --border-focus-offset: 4px;
+  --border-focus-ring: 2px;
+  --border-hairline: 1px;
+  --color-action-fill: #d4967d;
+  --color-action-fill-disabled: #ddab97;
+  --color-action-fill-hover: #ddab97;
+  --color-action-fill-text: #ffffff;
+  --color-border-focus: #303636;
+  --color-surface-1: #495a58;
+  --color-surface-2: #d4967d;
+  --color-surface-3: #ffffff;
+  --color-surface-4: #e5e3dc;
+  --color-text-accent: #495a58;
+  --color-text-ink: #303636;
+  --color-text-inverse: #ffffff;
+  --radius-control: 15px;
+  --space-control-x: 35.2px;
+  --space-control-y: 24px;
+  --type-family-body: 'PT Serif';
+  --type-family-display: 'Marcellus';
+  --type-size-body: 16px;
+  --type-size-h1: 66.4px;
+  --type-size-h2: 46.24px;
+  --type-size-h3: 36.16px;
+  --type-size-h4: 26.08px;
+  --type-size-hero: 232px;
+  --type-size-wordmark: 24.4px;
+  --type-weight-bold: 700;
   --type-weight-regular: 400;
 }
 
 * { box-sizing: border-box; margin: 0; }
 
 body {
-  font-family: var(--type-family), system-ui, sans-serif;
-  font-size: var(--type-size-label);
+  font-family: var(--type-family-body), serif;
+  font-size: var(--type-size-body);
   font-weight: var(--type-weight-regular);
-  background: var(--color-surface);
-  color: var(--color-on-surface);
+  background: var(--color-surface-1);
+  color: var(--color-text-inverse);
   padding: var(--space-control-x);
 }
 
@@ -48,12 +65,14 @@ body {
 }
 
 .wordmark {
-  font-size: var(--type-size-heading);
-  font-weight: var(--type-weight-label);
+  font-family: var(--type-family-display), serif;
+  font-size: var(--type-size-wordmark);
+  font-weight: var(--type-weight-regular);
+  letter-spacing: -0.02em; /* Brand/Wordmark text style: tracking -2% */
 }
 
-/* Button/Primary — Figma node 1:5, the single component the foundation
- * publishes. Same token bindings as apps/poc/. */
+/* Button/Primary, State=Default — Figma set 13:3, variant node 1:5.
+ * Same token bindings as apps/poc/. */
 .btn--primary {
   display: inline-flex;
   align-items: center;
@@ -61,11 +80,11 @@ body {
   border: none;
   cursor: pointer;
   text-decoration: none;
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--color-action-fill);
+  color: var(--color-action-fill-text);
   border-radius: var(--radius-control);
   padding: var(--space-control-y) var(--space-control-x);
-  font-family: var(--type-family), system-ui, sans-serif;
-  font-size: var(--type-size-label);
-  font-weight: var(--type-weight-label);
+  font-family: var(--type-family-body), serif;
+  font-size: var(--type-size-body);
+  font-weight: var(--type-weight-regular);
 }
