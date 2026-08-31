@@ -19,7 +19,12 @@
   --color-action-fill-disabled: #ddab97;
   --color-action-fill-hover: #ddab97;
   --color-action-fill-text: #ffffff;
+  --color-action-inverse-fill: #ffffff;
+  --color-action-inverse-fill-disabled: #f6eae5;
+  --color-action-inverse-fill-hover: #f6eae5;
+  --color-action-inverse-text: #d4967d;
   --color-border-focus: #303636;
+  --color-border-focus-inverse: #ffffff;
   --color-surface-1: #495a58;
   --color-surface-2: #d4967d;
   --color-surface-3: #ffffff;

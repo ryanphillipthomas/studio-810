@@ -12,7 +12,7 @@
 // regardless of trigger source. Every color and dimension is emitted once as a
 // CSS custom property taken verbatim from design/tokens/studio810/tokens.json, so
 // the output cannot pass the drift gate unless the tokens themselves did. The
-// page may only use what the Figma file actually publishes — 29 variables
+// page may only use what the Figma file actually publishes — 34 variables
 // today. A value the foundation does not publish is a design-system gap, not a
 // number to invent here.
 //

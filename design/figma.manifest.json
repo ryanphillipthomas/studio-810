@@ -7,7 +7,7 @@
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
       "scopeHint": "Single Foundation page (0:1). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px); provenance selectors recorded in each variable/style description and in the PR that landed them.",
-      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 29 variables, nine text styles, and one component set.",
+      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 34 variables, nine text styles, and two component sets.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -26,7 +26,12 @@
             "studio810/color/text-inverse",
             "studio810/color/text-ink",
             "studio810/color/text-accent",
-            "studio810/color/border-focus"
+            "studio810/color/border-focus",
+            "studio810/color/action-inverse-fill",
+            "studio810/color/action-inverse-text",
+            "studio810/color/action-inverse-fill-hover",
+            "studio810/color/action-inverse-fill-disabled",
+            "studio810/color/border-focus-inverse"
           ]
         },
         "studio810/radius": {
@@ -135,13 +140,31 @@
           ],
           "bindings": "each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-fill; Hover action-fill-hover; Disabled action-fill-disabled). State=Focused adds a 'Focus Ring' rectangle with stroke color (color/border-focus), per-side stroke weights (border/focus-ring) and corner radii (radius/control) bound; the ring's ±6px placement = focus-ring + focus-offset, positional geometry Figma cannot bind to variables.",
           "deviations": "Size and Shape axes from the focx matrix intentionally omitted: the live site defines exactly one control size and one shape (no --small/--large or pill rules exist in its served CSS). Approved at Checkpoint 1, 2026-08-31."
+        },
+        "Button/Inverse": {
+          "nodeId": "17:7",
+          "key": "bd5001514c6b40d0ef13689288f1e4d63f0cb097",
+          "variants": "State(Default|Hover|Focused|Disabled)",
+          "variantNodeIds": {
+            "State=Default": "17:8",
+            "State=Hover": "17:10",
+            "State=Focused": "17:12",
+            "State=Disabled": "17:15"
+          },
+          "size": "160x406",
+          "properties": [
+            "Label#13:0 (TEXT)",
+            "State (VARIANT)"
+          ],
+          "bindings": "clone of Button/Primary's structure; each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-inverse-fill; Hover action-inverse-fill-hover; Disabled action-inverse-fill-disabled; labels action-inverse-text; Focus Ring stroke color border-focus-inverse). The set container's own fill is bound to color/surface-2 — the bright-theme terracotta backdrop the inverse button lives on — so white variants are visible on canvas.",
+          "deviations": "Same as Button/Primary: no Size/Shape axes (single measured size and shape). Hover/Disabled share a value because the live site renders both states as opacity .8; the label keeps action-inverse-text in those states because its color equals the flatten backdrop, making the flatten a mathematical no-op on the text. Approved by Ryan 2026-08-31 (\"add the inverse button too\")."
         }
       }
     }
   },
   "sync": {
     "tool": "figma-mcp",
-    "lastSync": "2026-08-31T18:48:45Z",
+    "lastSync": "2026-08-31T19:04:46Z",
     "syncedBy": "claude-code (Design role), authorized by Ryan"
   }
 }
