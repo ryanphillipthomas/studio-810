@@ -1,0 +1,14 @@
+{
+  "name": "studio810",
+  "private": true,
+  "version": "0.1.0",
+  "description": "wearestudio810.com umbrella organization — autonomous development monorepo",
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "drift-check": "node tools/drift-check/index.mjs"
+  }
+}

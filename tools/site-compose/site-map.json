@@ -1,0 +1,4 @@
+{
+  "description": "URL layout of wearestudio810.com. Maps site paths to committed app directories. apps/site is always the root. Adding a sub-app = one entry here.",
+  "mounts": {}
+}

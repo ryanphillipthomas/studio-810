@@ -1,0 +1,24 @@
+{
+  "description": "Registry of the Figma sources of design truth. The Design role syncs published variables/components from these into design/tokens/ via the Figma MCP.",
+  "files": {
+    "studio810-foundation": {
+      "name": "Studio 810 — DS-001 Foundation",
+      "fileKey": "RNiGA3UTB9q80Wl8yOAsFX",
+      "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
+      "role": "parent",
+      "scopeHint": "Single Foundation page. All content is studio810.* scope. Placeholder neutral palette until the Studio 810 brand palette is defined.",
+      "contains": "studio810 design system foundation: variable collection studio810/color (Light mode) and components",
+      "variableCollections": {
+        "studio810/color": { "id": "VariableCollectionId:1:2", "variables": ["studio810/color/primary", "studio810/color/on-primary"] }
+      },
+      "componentSets": {
+        "Button/Primary": { "nodeId": "1:5", "key": "9e6c4c14adb3809bc63021e3687e46f3194d1859", "variants": "none yet — single component with a Label text property" }
+      }
+    }
+  },
+  "sync": {
+    "tool": "figma-mcp",
+    "lastSync": null,
+    "syncedBy": null
+  }
+}

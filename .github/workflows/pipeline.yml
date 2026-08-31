@@ -1,0 +1,316 @@
+# The pipeline trigger surface. All three sources converge here:
+#   tickets  → issues labeled `pipeline:build`
+#   manual   → workflow_dispatch
+#   grok bot → repository_dispatch type `grok-build`
+# Intake is identical regardless of source: run ID, run branch, committed run
+# manifest, draft PR, acknowledgement. See docs/triggers.md.
+#
+# Phase 3 execution: when ANTHROPIC_API_KEY is configured, a Claude build agent
+# executes the role chain (pipeline/prompts/build-agent.md) and an independent
+# Claude QA agent verifies it (pipeline/prompts/qa-agent.md). Without the key —
+# and for "[drift-test]" negative tests — the Phase 2 deterministic builder
+# runs instead, so the rails stay testable at zero agent cost.
+name: pipeline
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: "What to build"
+        required: true
+        type: string
+  repository_dispatch:
+    types: [grok-build]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  checks: read     # poll + QA read the drift-gate check run
+  actions: read
+
+concurrency:
+  group: pipeline-${{ github.event.issue.number || github.run_id }}
+
+env:
+  HAS_ANTHROPIC: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+
+jobs:
+  intake:
+    if: github.event_name != 'issues' || github.event.label.name == 'pipeline:build'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # PIPELINE_TOKEN (a fine-grained PAT) instead of the default token:
+      # events created with GITHUB_TOKEN don't trigger other workflows, so the
+      # drift gate would never fire on pipeline-created PRs. Falls back to the
+      # default token so intake still works (gate-less) if the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PIPELINE_TOKEN || github.token }}
+
+      - name: Resolve trigger
+        id: trigger
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          MANUAL_PROMPT: ${{ inputs.prompt }}
+          GROK_PROMPT: ${{ github.event.client_payload.prompt }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          set -euo pipefail
+          case "$EVENT_NAME" in
+            issues)              SOURCE=ticket; PROMPT="$ISSUE_BODY" ;;
+            workflow_dispatch)   SOURCE=manual; PROMPT="$MANUAL_PROMPT" ;;
+            repository_dispatch) SOURCE=grok;   PROMPT="$GROK_PROMPT" ;;
+          esac
+          if [ -z "${PROMPT// /}" ]; then
+            echo "::error::Empty prompt — refusing to open a run with nothing to do."
+            exit 1
+          fi
+          RUN_ID="run-$(date -u +%Y%m%d-%H%M%S)-$SOURCE"
+          # "[drift-test]" in the prompt runs the negative test: the
+          # deterministic builder injects one raw value so the PR gate can
+          # prove it blocks.
+          DRIFT=0; case "$PROMPT" in *"[drift-test]"*) DRIFT=1 ;; esac
+          {
+            echo "source=$SOURCE"
+            echo "run_id=$RUN_ID"
+            echo "drift=$DRIFT"
+            echo "prompt<<PROMPT_EOF"
+            echo "$PROMPT"
+            echo "PROMPT_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create run branch and manifest
+        id: manifest
+        env:
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+          SOURCE: ${{ steps.trigger.outputs.source }}
+          PROMPT: ${{ steps.trigger.outputs.prompt }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ACTOR: ${{ github.actor }}
+          GROK_REQUESTED_BY: ${{ github.event.client_payload.requested_by }}
+          WORKFLOW_RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          BRANCH="run/$RUN_ID"
+          git checkout -b "$BRANCH"
+          mkdir -p "pipeline/runs/$RUN_ID"
+          node -e '
+            const fs = require("fs");
+            const manifest = {
+              runId: process.env.RUN_ID,
+              trigger: {
+                source: process.env.SOURCE,
+                ...(process.env.ISSUE_NUMBER ? { issueNumber: Number(process.env.ISSUE_NUMBER) } : {}),
+                actor: process.env.ACTOR,
+                ...(process.env.GROK_REQUESTED_BY ? { requestedBy: process.env.GROK_REQUESTED_BY } : {}),
+                workflowRunId: process.env.WORKFLOW_RUN_ID,
+              },
+              prompt: process.env.PROMPT,
+              mode: "build",
+              createdAt: new Date().toISOString(),
+              branch: "run/" + process.env.RUN_ID,
+            };
+            fs.writeFileSync(`pipeline/runs/${process.env.RUN_ID}/00-run.json`, JSON.stringify(manifest, null, 2) + "\n");
+          '
+          git config user.name "studio-810-pipeline[bot]"
+          git config user.email "pipeline@wearestudio810.com"
+          git add "pipeline/runs/$RUN_ID/00-run.json"
+          git commit -m "pipeline: open $RUN_ID (trigger: $SOURCE)"
+          git push origin "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      # ------------------------------------------------------- build (agent)
+      # The Claude Code CLI runs directly in this workspace — the wrapper
+      # action runs Claude in its own managed checkout, which discards the
+      # agent's work before our commit step can stage it.
+      - name: Install Claude Code CLI
+        if: env.HAS_ANTHROPIC == 'true' && steps.trigger.outputs.drift != '1'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Build agent — role chain (Chief → Engineer)
+        if: env.HAS_ANTHROPIC == 'true' && steps.trigger.outputs.drift != '1'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+        run: |
+          set -euo pipefail
+          claude -p "RUN_ID is $RUN_ID. Read pipeline/prompts/build-agent.md and execute that charter for this run, start to finish." \
+            --model claude-sonnet-5 \
+            --max-turns 60 \
+            --permission-mode acceptEdits \
+            --allowedTools "Read,Glob,Grep,Write,Edit,Bash(node:*),Bash(mkdir:*),Bash(ls:*),Bash(cat:*),Bash(jq:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*)"
+
+      # ---------------------------------------------- build (deterministic)
+      - name: Fallback build (deterministic POC builder)
+        if: env.HAS_ANTHROPIC != 'true' || steps.trigger.outputs.drift == '1'
+        env:
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+          DRIFT_INJECT: ${{ steps.trigger.outputs.drift }}
+        run: |
+          set -euo pipefail
+          node tools/poc-builder/index.mjs
+          if node tools/drift-check/index.mjs; then
+            echo "local drift-check: clean"
+          else
+            echo "::warning::local drift-check failed — the PR drift gate will block this run (expected for [drift-test])"
+          fi
+
+      - name: Commit build
+        env:
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+        run: |
+          set -euo pipefail
+          git add apps packages design pipeline
+          if git diff --cached --quiet; then
+            echo "::error::The build produced no changes — nothing to hand off."
+            exit 1
+          fi
+          git commit -m "pipeline: $RUN_ID build"
+          git push origin "run/$RUN_ID"
+
+      - name: Open draft PR (audit surface)
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.PIPELINE_TOKEN || github.token }}
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+          SOURCE: ${{ steps.trigger.outputs.source }}
+          BRANCH: ${{ steps.manifest.outputs.branch }}
+        run: |
+          set -euo pipefail
+          PR_URL=$(gh pr create \
+            --draft \
+            --head "$BRANCH" \
+            --title "pipeline: $RUN_ID" \
+            --body "Autonomous run **$RUN_ID** (trigger: \`$SOURCE\`).
+
+          Artifacts: \`pipeline/runs/$RUN_ID/\` — see [docs/pipeline.md](https://github.com/${{ github.repository }}/blob/main/docs/pipeline.md).
+
+          Bots build, never merge: this PR requires the drift gate and a human review.")
+          {
+            echo "url=$PR_URL"
+            echo "number=${PR_URL##*/}"
+          } >> "$GITHUB_OUTPUT"
+
+      # ------------------------------------------------------------ QA (agent)
+      - name: Await drift gate
+        id: gate
+        if: env.HAS_ANTHROPIC == 'true' && steps.trigger.outputs.drift != '1'
+        env:
+          # The default token, NOT the PAT: the fine-grained PIPELINE_TOKEN has
+          # no Checks:read, so `gh pr checks` silently sees nothing with it.
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          STATE=UNKNOWN; LINK=""
+          for i in $(seq 1 16); do
+            CHECK=$(gh pr checks "$PR_NUMBER" --json name,state,link \
+              --jq '.[] | select(.name=="drift")' 2>/dev/null || true)
+            if [ -n "$CHECK" ]; then
+              STATE=$(echo "$CHECK" | jq -r '.state')
+              LINK=$(echo "$CHECK" | jq -r '.link')
+              case "$STATE" in SUCCESS|FAILURE|ERROR|CANCELLED) break ;; esac
+            fi
+            sleep 15
+          done
+          echo "drift gate: $STATE $LINK"
+          {
+            echo "state=$STATE"
+            echo "url=${LINK:-https://github.com/${{ github.repository }}/pull/$PR_NUMBER/checks}"
+          } >> "$GITHUB_OUTPUT"
+
+      # The URL is Render's service-preview naming convention
+      # (<service>-pr-<number>.onrender.com), verified live on PR #14. Service
+      # previews are a dashboard toggle, not a render.yaml field — see that
+      # file's header. Polling keeps QA from reading a preview mid-build; an
+      # unreachable preview is recorded rather than fatal, because the QA
+      # charter already treats a missing preview as a documented limitation.
+      - name: Await Render preview
+        id: preview
+        if: env.HAS_ANTHROPIC == 'true' && steps.trigger.outputs.drift != '1'
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          URL="https://studio-810-pr-${PR_NUMBER}.onrender.com"
+          STATE=unreachable
+          for i in $(seq 1 20); do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L "$URL" || true)
+            if [ "$CODE" = "200" ]; then STATE=ready; break; fi
+            sleep 15
+          done
+          echo "preview: $STATE $URL"
+          {
+            echo "url=$URL"
+            echo "state=$STATE"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: QA agent — independent verification
+        if: env.HAS_ANTHROPIC == 'true' && steps.trigger.outputs.drift != '1'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          DRIFT_CHECK_STATE: ${{ steps.gate.outputs.state }}
+          DRIFT_CHECK_URL: ${{ steps.gate.outputs.url }}
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+          PREVIEW_STATE: ${{ steps.preview.outputs.state }}
+        run: |
+          set -euo pipefail
+          claude -p "RUN_ID is $RUN_ID. The run's PR is #$PR_NUMBER. DRIFT_CHECK_STATE is $DRIFT_CHECK_STATE and DRIFT_CHECK_URL is $DRIFT_CHECK_URL — you may confirm it yourself with 'gh pr checks $PR_NUMBER'. PREVIEW_URL is $PREVIEW_URL (state: $PREVIEW_STATE — ready means it answered HTTP 200; unreachable means record the limitation as before). Read pipeline/prompts/qa-agent.md and execute that charter for this run." \
+            --model claude-sonnet-5 \
+            --max-turns 40 \
+            --permission-mode acceptEdits \
+            --allowedTools "Read,Glob,Grep,Write,Edit,Bash(node:*),Bash(mkdir:*),Bash(ls:*),Bash(cat:*),Bash(jq:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(gh pr checks:*),Bash(gh pr view:*),Bash(curl:*)"
+
+      - name: Commit QA verdict
+        if: env.HAS_ANTHROPIC == 'true' && steps.trigger.outputs.drift != '1'
+        env:
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+        run: |
+          set -euo pipefail
+          git add pipeline
+          if git diff --cached --quiet; then
+            echo "::error::QA produced no verdict — the run is unverified."
+            exit 1
+          fi
+          git commit -m "pipeline: $RUN_ID qa verdict"
+          git push origin "run/$RUN_ID"
+
+      # ----------------------------------------------------------- close out
+      - name: Acknowledge on originating issue
+        if: steps.trigger.outputs.source == 'ticket'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" \
+            --body "Pipeline run **$RUN_ID** opened for this ticket → $PR_URL"
+
+      - name: Run summary
+        env:
+          RUN_ID: ${{ steps.trigger.outputs.run_id }}
+          SOURCE: ${{ steps.trigger.outputs.source }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+          GATE_STATE: ${{ steps.gate.outputs.state }}
+        run: |
+          {
+            echo "## Pipeline run"
+            echo "- **Run ID:** $RUN_ID"
+            echo "- **Trigger:** $SOURCE"
+            echo "- **PR:** $PR_URL"
+            if [ "$HAS_ANTHROPIC" = "true" ]; then
+              echo "- **Path:** agent (build + independent QA)"
+              echo "- **Drift gate at QA time:** ${GATE_STATE:-n/a}"
+            else
+              echo "- **Path:** deterministic fallback (no ANTHROPIC_API_KEY)"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
