@@ -1,0 +1,62 @@
+/* wearestudio810.com root site.
+ *
+ * Hand-maintained (unlike apps/poc/, which tools/poc-builder generates), but
+ * every value below is copied verbatim from design/tokens/studio810/tokens.json
+ * — the mirror of the published Figma variables. The drift gate enforces that:
+ * a value here that the foundation does not publish fails the check, and so
+ * does a value left stale after a token changes. Update this block only by
+ * re-copying from the mirror after a Design-role sync.
+ *
+ * Design-system gaps (docs/drift-gate.md): the foundation publishes no surface
+ * colour, no type scale beyond the control label, and no display face. Until
+ * those land in Figma this page stays deliberately plain rather than inventing
+ * them. */
+
+:root {
+  --color-on-primary: #ffffff;
+  --color-primary: #1a1a1a;
+  --radius-control: 8px;
+  --space-control-x: 20px;
+  --space-control-y: 12px;
+  --type-family: 'Inter';
+  --type-size-label: 16px;
+  --type-weight-label: 600;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+body {
+  font-family: var(--type-family), system-ui, sans-serif;
+  font-size: var(--type-size-label);
+  font-weight: var(--type-weight-label);
+  color: var(--color-primary);
+  padding: var(--space-control-x);
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-control-y);
+  max-width: 42rem;
+}
+
+/* Button/Primary — Figma node 1:5, the single component the foundation
+ * publishes. Same token bindings as apps/poc/. */
+.btn--primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-control);
+  padding: var(--space-control-y) var(--space-control-x);
+  font-family: var(--type-family), system-ui, sans-serif;
+  font-size: var(--type-size-label);
+  font-weight: var(--type-weight-label);
+}

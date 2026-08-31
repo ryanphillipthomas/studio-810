@@ -1,0 +1,69 @@
+{
+  "description": "Registry of the Figma sources of design truth. The Design role syncs published variables/components from these into design/tokens/ via the Figma MCP.",
+  "files": {
+    "studio810-foundation": {
+      "name": "Studio 810 \u2014 DS-001 Foundation",
+      "fileKey": "RNiGA3UTB9q80Wl8yOAsFX",
+      "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
+      "role": "parent",
+      "scopeHint": "Single Foundation page (0:1). All content is studio810.* scope. Placeholder neutral palette until the Studio 810 brand palette is defined.",
+      "contains": "studio810 design system foundation: four variable collections (color, radius, space, type), each single-mode 'Light', and one component.",
+      "variableCollections": {
+        "studio810/color": {
+          "id": "VariableCollectionId:1:2",
+          "modes": [
+            "Light"
+          ],
+          "variables": [
+            "studio810/color/primary",
+            "studio810/color/on-primary"
+          ]
+        },
+        "studio810/radius": {
+          "id": "VariableCollectionId:3:2",
+          "modes": [
+            "Light"
+          ],
+          "variables": [
+            "studio810/radius/control"
+          ]
+        },
+        "studio810/space": {
+          "id": "VariableCollectionId:3:4",
+          "modes": [
+            "Light"
+          ],
+          "variables": [
+            "studio810/space/control-x",
+            "studio810/space/control-y"
+          ]
+        },
+        "studio810/type": {
+          "id": "VariableCollectionId:3:7",
+          "modes": [
+            "Light"
+          ],
+          "variables": [
+            "studio810/type/family",
+            "studio810/type/size-label",
+            "studio810/type/weight-label"
+          ]
+        }
+      },
+      "componentSets": {
+        "Button/Primary": {
+          "nodeId": "1:5",
+          "key": "9e6c4c14adb3809bc63021e3687e46f3194d1859",
+          "variants": "none \u2014 single component with a Label text property; variants TBD",
+          "size": "92x43",
+          "bindings": "fills, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight are bound to studio810 variables"
+        }
+      }
+    }
+  },
+  "sync": {
+    "tool": "figma-mcp",
+    "lastSync": "2026-08-31T16:25:53Z",
+    "syncedBy": "claude-code (Design role), authorized by Ryan"
+  }
+}
