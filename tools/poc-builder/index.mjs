@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // poc-builder — Phase 2 deterministic builder.
 //
-// Generates the Connect POC page (apps/connect/) purely from the synced design
+// Generates the DS-001 POC page (apps/poc/) purely from the synced design
 // tokens and the registered Figma component sets: Button/Primary (28:117) and
 // Button/Destructive (31:117), each Size(Sm|Md|Lg) x Shape(Pill|Control) x
 // State(Default|Hover|Focused|Disabled), mirroring the Figma sheets.
@@ -21,7 +21,7 @@ import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 
 const ROOT = new URL('../..', import.meta.url).pathname;
-const OUT = join(ROOT, 'apps/connect');
+const OUT = join(ROOT, 'apps/poc');
 const DRIFT = process.env.DRIFT_INJECT === '1';
 
 const studio810 = JSON.parse(
@@ -183,14 +183,14 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Connect — Studio 810 DS-001 POC</title>
+<title>Studio 810 — DS-001 POC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <p class="eyebrow">Studio 810 &bull; DS-001 &bull; Pipeline POC</p>
-  <h1>Connect &mdash; Button components, generated from the design tokens</h1>
+  <h1>Button components, generated from the design tokens</h1>
 ${sheet('primary', 'Primary', '28:117')}
 ${sheet('destructive', 'Destructive', '31:117')}
 </body>
@@ -200,7 +200,7 @@ ${sheet('destructive', 'Destructive', '31:117')}
 mkdirSync(OUT, { recursive: true });
 writeFileSync(join(OUT, 'styles.css'), css);
 writeFileSync(join(OUT, 'index.html'), html);
-console.log(`poc-builder: wrote apps/connect/index.html + styles.css (${cssVars.length} css vars, ${componentsUsed.length} variants${DRIFT ? ', DRIFT INJECTED' : ''})`);
+console.log(`poc-builder: wrote apps/poc/index.html + styles.css (${cssVars.length} css vars, ${componentsUsed.length} variants${DRIFT ? ', DRIFT INJECTED' : ''})`);
 
 componentsUsed.sort();
 
@@ -220,7 +220,7 @@ if (process.env.RUN_ID && !DRIFT) {
   const report = {
     runId: process.env.RUN_ID,
     storiesImplemented: ['S1'],
-    filesChanged: ['apps/connect/index.html', 'apps/connect/styles.css'],
+    filesChanged: ['apps/poc/index.html', 'apps/poc/styles.css'],
     componentsUsed,
     tokensUsed,
     deviations: [],
