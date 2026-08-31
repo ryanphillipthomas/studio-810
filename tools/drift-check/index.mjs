@@ -2,12 +2,12 @@
 // drift-check — the design-drift gate. See docs/drift-gate.md.
 //
 // Checks, in order:
-//   1. Token integrity: every token file under design/tokens/ parses. The
-//      studio810 layer is the parent; every other directory there is a child
-//      layer whose namespace is its directory name. A child token must be
-//      either a <namespace>.* addition or an explicit override
-//      ("override": true) of an existing studio810 path. Silent parent
-//      redefinition = drift. Zero child layers is valid.
+//   1. Token integrity: every token file under design/tokens/ parses. PARENT
+//      names the parent layer; every other directory there is a child layer
+//      whose namespace is its directory name. A child token must be either a
+//      <namespace>.* addition or an explicit override ("override": true) of
+//      an existing parent path. Silent parent redefinition = drift. Zero
+//      child layers is valid.
 //   2. Raw-value scan: app/package source may not contain literal colors or
 //      hard-coded typography/spacing pixel values that don't correspond to a
 //      published token value.
@@ -49,11 +49,12 @@ function flatten(obj, prefix = '', out = new Map()) {
 
 const PARENT = 'studio810';
 
-const studio810Tokens = loadTokens(`design/tokens/${PARENT}/tokens.json`);
-const studio810Flat = studio810Tokens ? flatten(studio810Tokens) : new Map();
+const parentTokens = loadTokens(`design/tokens/${PARENT}/tokens.json`);
+const parentFlat = parentTokens ? flatten(parentTokens) : new Map();
 
 // Every directory under design/tokens/ other than the parent is a child layer,
-// namespaced by its directory name. None today; the rule holds when one lands.
+// namespaced by its directory name. The rule holds whether there are zero
+// children or many.
 function childLayers() {
   const dir = join(ROOT, 'design/tokens');
   try {
@@ -86,7 +87,7 @@ for (const namespace of childLayers()) {
     }
     if (isOverride) {
       const target = token.overrides;
-      if (!target || !studio810Flat.has(target)) {
+      if (!target || !parentFlat.has(target)) {
         fail(rel, `override "${path}" must name an existing ${PARENT} path in "overrides" (got: ${target ?? 'nothing'})`);
       }
     }
@@ -95,7 +96,7 @@ for (const namespace of childLayers()) {
 
 // ---------------------------------------------------------- 2. raw values
 const publishedValues = new Set(
-  [studio810Flat, ...childFlats]
+  [parentFlat, ...childFlats]
     .flatMap((flat) => [...flat.values()])
     .map((t) => String(t.value).toLowerCase())
 );
