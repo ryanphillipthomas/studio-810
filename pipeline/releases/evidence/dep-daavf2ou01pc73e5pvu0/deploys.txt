@@ -1,0 +1,19 @@
+[
+  {
+    "deploy": {
+      "id": "dep-daavf2ou01pc73e5pvu0",
+      "commit": {
+        "id": "28f3378f0fd750981b077876ae1e81d0358c4147",
+        "message": "deploy: teach the charter the sanctioned path to the credential\n\nThe second round of verification runs failed well: the sandbox refuses any\nshell command that expands $RENDER_API_KEY, the agents declined to fabricate\nthe fields they could not verify or to probe around the control, and the\ncommit guard failed the runs loudly. The charter now names the working form —\nwrite a small .mjs reading process.env and run it with node, so no secret\never appears in a command line — which is exactly how the successful runs did\nit. A denied curl stays denied; documented as a control, not a bug.\n\nCo-Authored-By: claude-flow <ruv@ruv.net>",
+        "createdAt": "2026-08-31T21:52:08Z"
+      },
+      "status": "live",
+      "trigger": "new_commit",
+      "createdAt": "2026-08-31T21:52:11.26236Z",
+      "updatedAt": "2026-08-31T21:52:23.438429Z",
+      "startedAt": "2026-08-31T21:52:11.260397Z",
+      "finishedAt": "2026-08-31T21:52:23.438216Z"
+    },
+    "cursor": "u5uhKllYL7ZmMm91MDFwYzczZTVwdnUw"
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "autoDeploy": "yes",
+  "autoDeployTrigger": "commit",
+  "branch": "staging",
+  "createdAt": "2026-08-31T20:09:12.656885Z",
+  "dashboardUrl": "https://dashboard.render.com/static/srv-daatuq7qj5pc73b9c9sg",
+  "id": "srv-daatuq7qj5pc73b9c9sg",
+  "name": "studio-810-staging",
+  "notifyOnFail": "default",
+  "ownerId": "tea-d8dd21h9rddc739r69n0",
+  "repo": "https://github.com/ryanphillipthomas/studio-810",
+  "rootDir": "",
+  "serviceDetails": {
+    "buildCommand": "node tools/site-compose/index.mjs",
+    "buildPlan": "starter",
+    "ipAllowList": [
+      {
+        "cidrBlock": "0.0.0.0/0",
+        "description": "everywhere"
+      }
+    ],
+    "previews": {
+      "generation": "off"
+    },
+    "publishPath": "dist",
+    "pullRequestPreviewsEnabled": "no",
+    "url": "https://wearestudio810-staging.onrender.com"
+  },
+  "slug": "wearestudio810-staging",
+  "suspended": "not_suspended",
+  "suspenders": [],
+  "type": "static_site",
+  "updatedAt": "2026-08-31T21:52:23.441271Z"
+}
