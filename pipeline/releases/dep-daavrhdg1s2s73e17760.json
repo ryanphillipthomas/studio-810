@@ -1,0 +1,38 @@
+{
+  "deployId": "dep-daavrhdg1s2s73e17760",
+  "environment": "staging",
+  "service": {
+    "id": "srv-daatuq7qj5pc73b9c9sg",
+    "name": "studio-810-staging",
+    "publicUrl": "https://staging.wearestudio810.com"
+  },
+  "expectedSha": "280795bb9564a9ef4a77930b96808c3ee7590b01",
+  "deploy": {
+    "status": "live",
+    "servingSha": "280795bb9564a9ef4a77930b96808c3ee7590b01",
+    "finishedAt": "2026-08-31T22:18:53.048221Z"
+  },
+  "health": {
+    "httpStatus": 200,
+    "tlsValid": true,
+    "certificateSubject": "CN=staging.wearestudio810.com",
+    "checkedUrl": "https://staging.wearestudio810.com",
+    "contentMarker": "<title>Studio 810</title>"
+  },
+  "customDomains": [
+    {
+      "name": "staging.wearestudio810.com",
+      "verified": true,
+      "certificateIssued": true
+    }
+  ],
+  "infraDrift": [
+    {
+      "setting": "name",
+      "declared": "wearestudio810-staging",
+      "actual": "studio-810-staging",
+      "authority": "repo"
+    }
+  ],
+  "outcome": "degraded"
+}
