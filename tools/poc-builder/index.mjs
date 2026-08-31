@@ -2,14 +2,18 @@
 // poc-builder — Phase 2 deterministic builder.
 //
 // Generates the DS-001 POC page (apps/poc/) purely from the synced design
-// tokens and the registered Figma component sets: Button/Primary (28:117) and
-// Button/Destructive (31:117), each Size(Sm|Md|Lg) x Shape(Pill|Control) x
-// State(Default|Hover|Focused|Disabled), mirroring the Figma sheets.
+// tokens and the one registered Figma component: Button/Primary (1:5) in
+// Studio 810 — DS-001 Foundation. That component is a single component with a
+// Label text property — no variants — so this page renders exactly one button.
+// Variants are TBD; when they land in Figma they land here, not before.
 //
 // Deterministic on purpose: same tokens in → byte-identical output out,
 // regardless of trigger source. Every color and dimension is emitted once as a
 // CSS custom property taken verbatim from design/tokens/studio810/tokens.json, so
-// the output cannot pass the drift gate unless the tokens themselves did.
+// the output cannot pass the drift gate unless the tokens themselves did. The
+// page may only use what the Figma file actually publishes — eight variables
+// today. A value the foundation does not publish is a design-system gap, not a
+// number to invent here.
 //
 // Env:
 //   RUN_ID       — when set, writes pipeline/runs/$RUN_ID/50-build-report.json
@@ -59,124 +63,39 @@ ${cssVars.join('\n')}
 * { box-sizing: border-box; margin: 0; }
 
 body {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  background: var(--surface-1);
-  color: var(--surface-inverse);
-  padding: var(--control-h-md);
+  font-family: var(--type-family), system-ui, sans-serif;
+  font-size: var(--type-size-label);
+  font-weight: var(--type-weight-label);
+  color: var(--color-primary);
+  padding: var(--space-control-x);
 }
 
-.eyebrow {
-  font-size: var(--text-brand-eyebrow);
-  font-weight: var(--weight-medium);
-  letter-spacing: var(--text-brand-eyebrow);
-  text-transform: uppercase;
+.caption {
+  margin-bottom: var(--space-control-y);
 }
 
-h1 {
-  font-size: var(--text-subheading);
-  font-weight: var(--weight-medium);
-  margin: var(--space-3) 0 var(--control-px-lg);
-}
-
-.sheet {
-  background: var(--surface-1);
-  border: var(--border-hairline) solid var(--border-subtle);
-  border-radius: var(--radius-card);
-  padding: var(--control-h-lg);
-  margin-bottom: var(--control-px-lg);
-}
-
-.sheet h2 {
-  font-size: var(--text-label);
-  font-weight: var(--weight-medium);
-  margin-bottom: var(--control-px-lg);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, max-content);
-  gap: var(--control-h-lg) var(--control-h-lg);
-  align-items: center;
-}
-
-.btn {
+/* Button/Primary — Figma node 1:5.
+ * Fill = studio810/color/primary, label = studio810/color/on-primary,
+ * radius = studio810/radius/control, padding = studio810/space/control-y
+ * and control-x, type = studio810/type/*. Mirrors the component's own
+ * variable bindings one-for-one. */
+.btn--primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
   border: none;
   cursor: pointer;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-weight: var(--weight-medium);
-  color: var(--action-fill-text);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-control);
+  padding: var(--space-control-y) var(--space-control-x);
+  font-family: var(--type-family), system-ui, sans-serif;
+  font-size: var(--type-size-label);
+  font-weight: var(--type-weight-label);
 }
-
-/* Sizes — heights, paddings, and type straight from control tokens */
-.btn--sm { height: var(--control-h-sm); padding: 0 var(--control-px-sm); font-size: var(--text-label); }
-.btn--md { height: var(--control-h-md); padding: 0 var(--control-px-md); font-size: var(--text-label); }
-.btn--lg { height: var(--control-h-lg); padding: 0 var(--control-px-lg); font-size: var(--text-body); }
-
-/* Shapes */
-.btn--pill { border-radius: var(--radius-pill); }
-.btn--control { border-radius: var(--radius-control); }
-
-/* Button/Primary */
-.btn--primary { background: var(--action-fill); }
-.btn--primary:hover, .btn--primary.is-hover { background: var(--action-fill-hover); }
-
-/* Button/Destructive */
-.btn--destructive { background: var(--status-danger); }
-.btn--destructive:hover, .btn--destructive.is-hover { background: var(--status-danger-fill); }
-
-/* States shared across variants */
-.btn:focus-visible, .btn.is-focused {
-  outline: var(--border-focus-ring) solid var(--border-focus);
-  outline-offset: var(--border-focus-ring);
-}
-.btn[disabled] { opacity: 0.4; cursor: not-allowed; }
-.btn[disabled]:hover { background: var(--action-fill); }
-.btn--destructive[disabled]:hover { background: var(--status-danger); }
 ${DRIFT ? '\n/* DELIBERATE DRIFT (negative test): raw value, not a published token */\n.drift-injected { background: #ff00aa; }\n' : ''}`;
 
-const SIZES = [
-  ['md', 'Medium'],
-  ['sm', 'Small'],
-  ['lg', 'Large'],
-];
-const SHAPES = [
-  ['pill', 'Pill'],
-  ['control', 'Control'],
-];
-const STATES = [
-  ['', 'Default'],
-  ['is-hover', 'Hover'],
-  ['is-focused', 'Focused'],
-  ['disabled', 'Disabled'],
-];
-
-const componentsUsed = [];
-
-function sheet(variant, title, figmaNode) {
-  const rows = [];
-  for (const [sizeKey, sizeName] of SIZES) {
-    for (const [shapeKey, shapeName] of SHAPES) {
-      for (const [stateCls, stateName] of STATES) {
-        componentsUsed.push(`studio810/Button/${title}/Size=${sizeName}, Shape=${shapeName}, State=${stateName}`);
-        const cls = ['btn', `btn--${variant}`, `btn--${sizeKey}`, `btn--${shapeKey}`, stateCls === 'is-hover' || stateCls === 'is-focused' ? stateCls : '']
-          .filter(Boolean)
-          .join(' ');
-        const disabled = stateCls === 'disabled' ? ' disabled' : '';
-        rows.push(`      <button class="${cls}"${disabled} title="${sizeName} / ${shapeName} / ${stateName}">Button</button>`);
-      }
-    }
-  }
-  return `  <section class="sheet" data-figma-node="${figmaNode}">
-    <h2>Button/${title} — Figma ${figmaNode}</h2>
-    <div class="grid">
-${rows.join('\n')}
-    </div>
-  </section>`;
-}
+const componentsUsed = ['studio810/Button/Primary'];
 
 const html = `<!doctype html>
 <html lang="en">
@@ -185,14 +104,14 @@ const html = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Studio 810 — DS-001 POC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <p class="eyebrow">Studio 810 &bull; DS-001 &bull; Pipeline POC</p>
-  <h1>Button components, generated from the design tokens</h1>
-${sheet('primary', 'Primary', '28:117')}
-${sheet('destructive', 'Destructive', '31:117')}
+  <p class="caption">Studio 810 &bull; DS-001 &bull; Button/Primary, generated from the design tokens</p>
+  <section data-figma-node="1:5">
+    <button class="btn--primary">Button</button>
+  </section>
 </body>
 </html>
 `;
@@ -200,9 +119,7 @@ ${sheet('destructive', 'Destructive', '31:117')}
 mkdirSync(OUT, { recursive: true });
 writeFileSync(join(OUT, 'styles.css'), css);
 writeFileSync(join(OUT, 'index.html'), html);
-console.log(`poc-builder: wrote apps/poc/index.html + styles.css (${cssVars.length} css vars, ${componentsUsed.length} variants${DRIFT ? ', DRIFT INJECTED' : ''})`);
-
-componentsUsed.sort();
+console.log(`poc-builder: wrote apps/poc/index.html + styles.css (${cssVars.length} css vars, ${componentsUsed.length} component${DRIFT ? ', DRIFT INJECTED' : ''})`);
 
 if (process.env.RUN_ID && !DRIFT) {
   let passed = false;
