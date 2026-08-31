@@ -7,20 +7,23 @@
  * does a value left stale after a token changes. Update this block only by
  * re-copying from the mirror after a Design-role sync.
  *
- * Design-system gaps (docs/drift-gate.md): the foundation publishes no surface
- * colour, no type scale beyond the control label, and no display face. Until
- * those land in Figma this page stays deliberately plain rather than inventing
- * them. */
+ * Design-system gap (docs/drift-gate.md): the foundation publishes no display
+ * face, so the wordmark is set in the same family as everything else. When a
+ * studio810/type/display variable lands in Figma, sync and use it here. */
 
 :root {
   --color-on-primary: #ffffff;
+  --color-on-surface: #1a1a1a;
   --color-primary: #1a1a1a;
+  --color-surface: #ffffff;
   --radius-control: 8px;
   --space-control-x: 20px;
   --space-control-y: 12px;
   --type-family: 'Inter';
+  --type-size-heading: 32px;
   --type-size-label: 16px;
   --type-weight-label: 600;
+  --type-weight-regular: 400;
 }
 
 * { box-sizing: border-box; margin: 0; }
@@ -28,8 +31,9 @@
 body {
   font-family: var(--type-family), system-ui, sans-serif;
   font-size: var(--type-size-label);
-  font-weight: var(--type-weight-label);
-  color: var(--color-primary);
+  font-weight: var(--type-weight-regular);
+  background: var(--color-surface);
+  color: var(--color-on-surface);
   padding: var(--space-control-x);
 }
 
@@ -41,6 +45,11 @@ body {
   justify-content: center;
   gap: var(--space-control-y);
   max-width: 42rem;
+}
+
+.wordmark {
+  font-size: var(--type-size-heading);
+  font-weight: var(--type-weight-label);
 }
 
 /* Button/Primary — Figma node 1:5, the single component the foundation
