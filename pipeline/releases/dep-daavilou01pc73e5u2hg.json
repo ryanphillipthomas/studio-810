@@ -1,0 +1,44 @@
+{
+  "deployId": "dep-daavilou01pc73e5u2hg",
+  "environment": "staging",
+  "service": {
+    "id": "srv-daatuq7qj5pc73b9c9sg",
+    "name": "studio-810-staging",
+    "publicUrl": "https://staging.wearestudio810.com"
+  },
+  "expectedSha": "101028728b0fe86bc5614548d375a95c62e0e074",
+  "deploy": {
+    "status": "live",
+    "servingSha": "101028728b0fe86bc5614548d375a95c62e0e074",
+    "finishedAt": "2026-08-31T21:59:59.063978Z"
+  },
+  "health": {
+    "httpStatus": 200,
+    "tlsValid": true,
+    "certificateSubject": "CN=staging.wearestudio810.com",
+    "checkedUrl": "https://staging.wearestudio810.com/",
+    "contentMarker": "<title>Studio 810</title>"
+  },
+  "customDomains": [
+    {
+      "name": "staging.wearestudio810.com",
+      "verified": true,
+      "certificateIssued": true
+    }
+  ],
+  "infraDrift": [
+    {
+      "setting": "name",
+      "declared": "wearestudio810",
+      "actual": "studio-810-staging",
+      "authority": "repo"
+    },
+    {
+      "setting": "prPreviewsEnabled",
+      "declared": "automatic (enabled in dashboard 2026-08-31 per docs/sources-of-truth.md)",
+      "actual": "off",
+      "authority": "repo"
+    }
+  ],
+  "outcome": "degraded"
+}

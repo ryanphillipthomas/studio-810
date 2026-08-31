@@ -1,0 +1,93 @@
+* Host staging.wearestudio810.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 216.24.57.15, 216.24.57.7
+*   Trying 216.24.57.15:443...
+* Connected to staging.wearestudio810.com (216.24.57.15) port 443
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /etc/ssl/certs/ca-certificates.crt
+*  CApath: /etc/ssl/certs
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [122 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [19 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [2504 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [79 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519 / id-ecPublicKey
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=staging.wearestudio810.com
+*  start date: Aug 31 19:16:36 2026 GMT
+*  expire date: Nov 29 20:16:32 2026 GMT
+*  subjectAltName: host "staging.wearestudio810.com" matched cert's "staging.wearestudio810.com"
+*  issuer: C=US; O=Google Trust Services; CN=WE1
+*  SSL certificate verify ok.
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+*   Certificate level 1: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA384
+*   Certificate level 2: Public key type EC/secp384r1 (384/192 Bits/secBits), signed using ecdsa-with-SHA384
+} [5 bytes data]
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://staging.wearestudio810.com/
+* [HTTP/2] [1] [:method: HEAD]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: staging.wearestudio810.com]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.5.0]
+* [HTTP/2] [1] [accept: */*]
+} [5 bytes data]
+> HEAD / HTTP/2
+> Host: staging.wearestudio810.com
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* old SSL session ID is stale, removing
+{ [5 bytes data]
+< HTTP/2 200 
+< date: Mon, 31 Aug 2026 22:01:56 GMT
+< content-type: text/html; charset=utf-8
+< cache-control: public, max-age=0, s-maxage=300
+< age: 11
+< cf-cache-status: HIT
+< last-modified: Mon, 31 Aug 2026 21:59:59 UTC
+< rndr-id: e7680a7f-9b1a-48c1
+< server: cloudflare
+< vary: Accept-Encoding
+< vary: Accept-Encoding
+< x-content-type-options: nosniff
+< etag: W/"dbc42014a2045653f2557d61a0dc5075"
+< cf-ray: a33f510f494305ed-IAD
+< alt-svc: h3=":443"; ma=86400
+< 
+* Connection #0 to host staging.wearestudio810.com left intact
+HTTP/2 200 
+date: Mon, 31 Aug 2026 22:01:56 GMT
+content-type: text/html; charset=utf-8
+cache-control: public, max-age=0, s-maxage=300
+age: 11
+cf-cache-status: HIT
+last-modified: Mon, 31 Aug 2026 21:59:59 UTC
+rndr-id: e7680a7f-9b1a-48c1
+server: cloudflare
+vary: Accept-Encoding
+vary: Accept-Encoding
+x-content-type-options: nosniff
+etag: W/"dbc42014a2045653f2557d61a0dc5075"
+cf-ray: a33f510f494305ed-IAD
+alt-svc: h3=":443"; ma=86400
+
