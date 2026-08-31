@@ -1,0 +1,34 @@
+{
+  "deployId": "dep-daavtp6q1p3s73fasf7g",
+  "environment": "staging",
+  "service": {
+    "id": "srv-daatuq7qj5pc73b9c9sg",
+    "name": "studio-810-staging",
+    "publicUrl": "https://staging.wearestudio810.com"
+  },
+  "expectedSha": "314fe98a84593a0f0ac178f2750e9a731eb7590e",
+  "deploy": {
+    "status": "live",
+    "servingSha": "314fe98a84593a0f0ac178f2750e9a731eb7590e",
+    "finishedAt": "2026-08-31T22:23:40.197922Z"
+  },
+  "health": {
+    "httpStatus": 200,
+    "tlsValid": true,
+    "certificateSubject": "CN=staging.wearestudio810.com",
+    "checkedUrl": "https://staging.wearestudio810.com",
+    "contentMarker": "<title>Studio 810</title>"
+  },
+  "customDomains": [
+    {
+      "name": "staging.wearestudio810.com",
+      "verified": true,
+      "certificateIssued": true
+    }
+  ],
+  "infraDrift": [],
+  "outcome": "degraded",
+  "unverified": [
+    "promotion step failed: Command failed: gh pr create --draft --base main --head staging --title Promote staging to production --body Staging is verified `live` at `314fe98a84593a0f0ac178f2750e9a731eb7590e` — deploy `dep-daav"
+  ]
+}
