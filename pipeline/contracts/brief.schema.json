@@ -20,7 +20,7 @@
       "items": { "type": "string" },
       "description": "Hard limits beyond the standing guardrails (target app, deadline, must-use components)"
     },
-    "targetApp": { "enum": ["connect", "studio810-site", "shared"], "description": "Which part of the umbrella this run touches" },
+    "targetApp": { "enum": ["site", "poc", "shared"], "description": "Which part of the umbrella this run touches" },
     "route": {
       "type": "object",
       "required": ["skipResearch"],

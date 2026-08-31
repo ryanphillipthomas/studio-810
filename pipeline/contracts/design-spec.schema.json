@@ -33,7 +33,7 @@
             "type": "array",
             "minItems": 1,
             "items": { "type": "string" },
-            "description": "Component names from design-studio810 / design-connect, e.g. 'connect/Button/primary'"
+            "description": "Component names from design-studio810, e.g. 'studio810/Button/Primary'"
           },
           "tokens": {
             "type": "array",

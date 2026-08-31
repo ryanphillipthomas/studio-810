@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "connect-poc",
+      "name": "poc",
       "runtimeExecutable": "node",
       "runtimeArgs": ["tools/poc-builder/serve.mjs"],
       "port": 4173

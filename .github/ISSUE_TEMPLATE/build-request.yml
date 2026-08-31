@@ -16,9 +16,9 @@ body:
     attributes:
       label: Target
       options:
-        - connect
-        - studio810-site
-        - shared / design system
+        - site
+        - poc
+        - shared
       default: 0
     validations:
       required: true
