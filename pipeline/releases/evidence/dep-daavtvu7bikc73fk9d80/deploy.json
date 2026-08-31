@@ -1,0 +1,14 @@
+{
+  "id": "dep-daavtvu7bikc73fk9d80",
+  "commit": {
+    "id": "797baeedc64db7d32406ca86ae0ff6abffe38367",
+    "message": "release: record for 314fe98 (staging, degraded)",
+    "createdAt": "2026-08-31T22:23:57Z"
+  },
+  "status": "live",
+  "trigger": "new_commit",
+  "createdAt": "2026-08-31T22:23:59.272249Z",
+  "updatedAt": "2026-08-31T22:24:07.222756Z",
+  "startedAt": "2026-08-31T22:23:59.270595Z",
+  "finishedAt": "2026-08-31T22:24:07.222464Z"
+}
