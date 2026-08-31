@@ -1,0 +1,24 @@
+HTTP/2 200
+date: Mon, 31 Aug 2026 22:01:28 GMT
+content-type: text/html; charset=utf-8
+cache-control: public, max-age=0, s-maxage=300
+age: 43
+cf-cache-status: HIT
+last-modified: Mon, 31 Aug 2026 21:59:58 UTC
+rndr-id: cd9b3433-edab-4d9f
+server: cloudflare
+strict-transport-security: max-age=315360000; includeSubdomains; preload
+vary: Accept-Encoding
+vary: Accept-Encoding
+x-content-type-options: nosniff
+etag: W/"dbc42014a2045653f2557d61a0dc5075"
+cf-ray: a33f506069052537-SEA
+alt-svc: h3=":443"; ma=86400
+
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519 / id-ecPublicKey
+*  subject: CN=onrender.com
+*  expire date: Oct 22 21:54:17 2026 GMT
+*  subjectAltName: host "wearestudio810.onrender.com" matched cert's "*.onrender.com"
+*  issuer: C=US; O=Google Trust Services; CN=WE1
+
+content marker matched: <title>Studio 810</title>

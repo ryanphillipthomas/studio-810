@@ -1,18 +1,23 @@
 {
   "comment": "Per-repo deploy targets, read by .github/workflows/deploy.yml. The workflow is parity-identical across repos; everything repo-specific lives here. contentMarker is a string the deploy agent must find in the served page — proof the right site answered, not just any 200. NOTE: production publicUrl is the onrender.com hostname until the wearestudio810.com cutover — the apex domain still serves Squarespace. Update publicUrl (and nothing else) when the cutover lands.",
-  "bot": { "name": "studio-810-pipeline[bot]", "email": "pipeline@wearestudio810.com" },
+  "bot": {
+    "name": "studio-810-pipeline[bot]",
+    "email": "pipeline@wearestudio810.com"
+  },
   "environments": {
     "staging": {
       "branch": "staging",
       "serviceId": "srv-daatuq7qj5pc73b9c9sg",
       "publicUrl": "https://staging.wearestudio810.com",
-      "contentMarker": "<title>Studio 810</title>"
+      "contentMarker": "<title>Studio 810</title>",
+      "serviceName": "wearestudio810-staging"
     },
     "production": {
       "branch": "main",
       "serviceId": "srv-daarb8rtqb8s73dvucm0",
       "publicUrl": "https://wearestudio810.onrender.com",
-      "contentMarker": "<title>Studio 810</title>"
+      "contentMarker": "<title>Studio 810</title>",
+      "serviceName": "wearestudio810"
     }
   }
 }
