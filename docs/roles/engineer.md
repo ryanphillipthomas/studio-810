@@ -11,7 +11,7 @@ Builds exactly what the design spec describes, with system components and tokens
 - `50-build-report.json` (contract: [`build-report.schema.json`](../../pipeline/contracts/build-report.schema.json)) — files changed, components and token paths consumed, deviations (**must be empty** — a needed deviation is an escalation, not a report line), and the Render preview URL once the PR exists.
 
 ## Responsibilities
-1. Consume only `packages/design-studio810` / `packages/design-connect` components and `design/tokens/` values. No raw hex, no ad-hoc spacing, no lookalike components — the drift gate checks, but passing it is the floor, not the goal.
+1. Consume only `packages/design-studio810` components (or those of a child package extending it) and `design/tokens/` values. No raw hex, no ad-hoc spacing, no lookalike components — the drift gate checks, but passing it is the floor, not the goal.
 2. Run `pnpm drift-check` locally **before** handing off; a red gate at QA time is an Engineer failure.
 3. Stay inside the product spec's scope. Out-of-scope improvements are noted for a future ticket, not built.
 4. Keep the branch reviewable: coherent commits, no unrelated churn.

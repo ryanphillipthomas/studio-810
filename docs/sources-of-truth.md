@@ -20,10 +20,10 @@ One canonical home per concern. Everything else is a mirror, a consumer, or drif
 
 ## Design parent/child relationship
 
-The studio810 design system is the **parent**; Connect's is a **child** that extends it — the way Grok's extends xAI's.
+The studio810 design system is the **parent**. A sub-application may carry a **child** system that extends it — shared fundamentals, distinct identity — rather than restating it.
 
 - `design/tokens/studio810/` — the parent tokens, extracted from the studio810 Figma foundation.
-- `design/tokens/connect/` — **deltas only**: new `connect.*` tokens, plus explicit overrides marked `"override": true`. Never a copy of the parent.
-- `packages/design-connect` declares a dependency on `packages/design-studio810` and re-exports what it does not override.
+- `design/tokens/<child>/` — **deltas only**: new `<child>.*` tokens, plus explicit overrides marked `"override": true`. Never a copy of the parent. The directory name is the namespace.
+- A child design-system package declares a dependency on `packages/design-studio810` and re-exports what it does not override.
 
-This makes extension mechanically checkable: the drift gate fails any Connect token that silently redefines a parent path.
+This makes extension mechanically checkable: the drift gate fails any child token that silently redefines a parent path. There are no child layers today — zero is valid, and the check binds the moment one appears.

@@ -15,8 +15,8 @@ Write each artifact to `pipeline/runs/$RUN_ID/`, conforming to its schema in `pi
 3. **Research** → `30-research.json` only if the brief's route says so; otherwise skip (the brief must record the skip reason).
 4. **Design** → `40-design-spec.json`. Resolve every visual need to the published mirrors: components from `design/figma.manifest.json` (`componentSets`), tokens from `design/tokens/`. Cite exact Figma file keys and node IDs from the manifest. You cannot reach Figma from CI — the mirror is your truth. A need the mirror can't satisfy is a `designSystemGaps` entry; if a gap blocks a story, stop and exit non-zero rather than inventing visuals.
 5. **Engineer** → build in `apps/` and/or `packages/`, then `50-build-report.json`. Rules:
-   - Every color, dimension, radius, and type value resolves to a token (CSS custom properties generated from `design/tokens/` — see `apps/connect/styles.css` for the established pattern). Raw values fail the gate.
-   - Use the component patterns the design spec cites. Extend `apps/connect` rather than replacing it, unless the spec says otherwise.
+   - Every color, dimension, radius, and type value resolves to a token (CSS custom properties generated from `design/tokens/` — see `apps/poc/styles.css` for the established pattern). Raw values fail the gate.
+   - Use the component patterns the design spec cites. Extend the app the brief targets (`apps/site` or `apps/poc`) rather than replacing it, unless the spec says otherwise.
    - Run `node tools/drift-check/index.mjs` and iterate until clean. The report's `driftCheckLocal.passed` must be honest.
    - `deviations` must be `[]` — a needed deviation means stop and exit non-zero with the reason.
 

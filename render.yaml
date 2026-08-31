@@ -1,7 +1,7 @@
 # Deployment source of truth (docs/sources-of-truth.md).
 #
 # One static site serves the whole umbrella: wearestudio810.com routes sub-apps by path
-# (wearestudio810.com/skills/connect), so tools/site-compose copies the committed app
+# (wearestudio810.com/poc), so tools/site-compose copies the committed app
 # directories into dist/ per its site-map.json. COPY-ONLY — nothing is
 # generated or rewritten at deploy time: what was reviewed is what deploys.
 #

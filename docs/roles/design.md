@@ -8,11 +8,11 @@ Owns the bridge between Figma (the design source of truth) and the repo. Produce
 
 ## Outputs
 - `40-design-spec.json` (contract: [`design-spec.schema.json`](../../pipeline/contracts/design-spec.schema.json)) — for each screen/story: the Figma node references, the exact components to use, and the exact tokens involved. Everything the Engineer touches visually must be enumerated here.
-- When Figma has changed: an updated `design/tokens/` sync (parent and/or connect deltas) committed on the run branch with the manifest's `lastSync` updated.
+- When Figma has changed: an updated `design/tokens/` sync (parent and/or child deltas) committed on the run branch with the manifest's `lastSync` updated.
 
 ## Responsibilities
 1. Resolve every visual need in the spec to published Figma components/variables. Nothing is invented at this desk.
-2. Keep the parent/child discipline: studio810 tokens in `design/tokens/studio810/`, Connect deltas only in `design/tokens/connect/` (`connect.*` additions or explicit `"override": true`).
+2. Keep the parent/child discipline: studio810 tokens in `design/tokens/studio810/`, and a child layer's deltas only in its own `design/tokens/<child>/` (`<child>.*` additions or explicit `"override": true`).
 3. When the spec needs something Figma lacks, record a **design-system gap** in the artifact and escalate: the change happens in Figma first, then syncs. Never patch tokens locally.
 4. Reference nodes precisely (file key + node id) so QA can compare the build against the exact source.
 

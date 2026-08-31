@@ -12,7 +12,7 @@ You are an agent (or a human) working in the wearestudio810.com autonomous devel
 
 ## Non-negotiable guardrails
 
-1. **No design drift.** Figma is the design source of truth. Every color, spacing, radius, type style, and component you use must resolve to a published token in `design/tokens/` or a component in `packages/design-studio810` / `packages/design-connect`. Raw hex values, raw pixel values, and invented components fail the drift gate ([`docs/drift-gate.md`](docs/drift-gate.md)) and the run dies there. Do not try to route around the gate; fix the build or escalate to the Chief.
+1. **No design drift.** Figma is the design source of truth. Every color, spacing, radius, type style, and component you use must resolve to a published token in `design/tokens/` or a component in `packages/design-studio810` (or a child package extending it). Raw hex values, raw pixel values, and invented components fail the drift gate ([`docs/drift-gate.md`](docs/drift-gate.md)) and the run dies there. Do not try to route around the gate; fix the build or escalate to the Chief.
 2. **Build, never merge.** Your output is a pull request with a Render deploy preview. You do not merge, approve, force-push to `main`, or dismiss reviews. Human review is the only path to merge. `CODEOWNERS` enforces this.
 3. **One source of truth per concern.** Never create a second home for design values, tickets, run state, or deployment config. If information seems to be missing from its canonical home, that is a finding to report — not a license to improvise a new location.
 
@@ -22,7 +22,7 @@ You are an agent (or a human) working in the wearestudio810.com autonomous devel
 - **Every stage writes an artifact** to `pipeline/runs/<run-id>/` conforming to its schema in `pipeline/contracts/`. Commit the artifact before handing off. An artifact that fails schema validation is an incomplete handoff.
 - **Handoffs are explicit.** You receive the previous role's artifact; you produce yours; the Chief routes between roles. Do not skip stages or consume artifacts out of order.
 - **Ask rather than assume.** If the brief is ambiguous, record the ambiguity and your chosen interpretation in your artifact's `assumptions` field. If the ambiguity is blocking, halt and escalate to the Chief, who may ask the human on the originating issue.
-- **Design system extension rules.** `design-connect` extends `design-studio810`. Connect may **add** tokens under the `connect.*` namespace and may **override** a parent token only with an explicit `"override": true` marker. Silent redefinition of parent values is drift.
+- **Design system extension rules.** `design-studio810` is the parent. A child design system may **add** tokens under its own `<namespace>.*` prefix — the namespace is its directory name under `design/tokens/` — and may **override** a parent token only with an explicit `"override": true` marker. Silent redefinition of parent values is drift. There are no child layers today; the rule binds the first one that lands.
 
 ## What you may never do
 
