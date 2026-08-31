@@ -1,0 +1,38 @@
+{
+  "deployId": "dep-daauu9u417fc73f260lg",
+  "environment": "production",
+  "service": {
+    "id": "srv-daarb8rtqb8s73dvucm0",
+    "name": "studio-810",
+    "publicUrl": "https://wearestudio810.onrender.com"
+  },
+  "expectedSha": "3fcf59612d5471db0d17de6de870593d22058da4",
+  "deploy": {
+    "status": "live",
+    "servingSha": "3fcf59612d5471db0d17de6de870593d22058da4",
+    "finishedAt": "2026-08-31T21:16:32.357092Z"
+  },
+  "health": {
+    "httpStatus": 200,
+    "tlsValid": true,
+    "certificateSubject": "CN=onrender.com",
+    "checkedUrl": "https://wearestudio810.onrender.com",
+    "contentMarker": "<title>Studio 810</title>"
+  },
+  "customDomains": [],
+  "infraDrift": [
+    {
+      "setting": "name",
+      "declared": "wearestudio810",
+      "actual": "studio-810",
+      "authority": "repo"
+    },
+    {
+      "setting": "prPreviewsEnabled",
+      "declared": "automatic (enabled in dashboard 2026-08-31 per docs/sources-of-truth.md)",
+      "actual": "off",
+      "authority": "repo"
+    }
+  ],
+  "outcome": "degraded"
+}
