@@ -2,16 +2,17 @@
 // poc-builder — Phase 2 deterministic builder.
 //
 // Generates the DS-001 POC page (apps/poc/) purely from the synced design
-// tokens and the one registered Figma component: Button/Primary (1:5) in
-// Studio 810 — DS-001 Foundation. That component is a single component with a
-// Label text property — no variants — so this page renders exactly one button.
-// Variants are TBD; when they land in Figma they land here, not before.
+// tokens and the one registered Figma component set: Button/Primary (13:3) in
+// Studio 810 — DS-001 Foundation. That set carries a Label text property and a
+// State variant axis (Default|Hover|Focused|Disabled); this static page renders
+// the State=Default variant (node 1:5). Interactive states land here when the
+// POC grows real interactivity, not before.
 //
 // Deterministic on purpose: same tokens in → byte-identical output out,
 // regardless of trigger source. Every color and dimension is emitted once as a
 // CSS custom property taken verbatim from design/tokens/studio810/tokens.json, so
 // the output cannot pass the drift gate unless the tokens themselves did. The
-// page may only use what the Figma file actually publishes — eight variables
+// page may only use what the Figma file actually publishes — 34 variables
 // today. A value the foundation does not publish is a design-system gap, not a
 // number to invent here.
 //
@@ -63,11 +64,11 @@ ${cssVars.join('\n')}
 * { box-sizing: border-box; margin: 0; }
 
 body {
-  font-family: var(--type-family), system-ui, sans-serif;
-  font-size: var(--type-size-label);
+  font-family: var(--type-family-body), serif;
+  font-size: var(--type-size-body);
   font-weight: var(--type-weight-regular);
-  background: var(--color-surface);
-  color: var(--color-on-surface);
+  background: var(--color-surface-1);
+  color: var(--color-text-inverse);
   padding: var(--space-control-x);
 }
 
@@ -75,10 +76,10 @@ body {
   margin-bottom: var(--space-control-y);
 }
 
-/* Button/Primary — Figma node 1:5.
- * Fill = studio810/color/primary, label = studio810/color/on-primary,
+/* Button/Primary, State=Default — Figma set 13:3, variant node 1:5.
+ * Fill = studio810/color/action-fill, label = studio810/color/action-fill-text,
  * radius = studio810/radius/control, padding = studio810/space/control-y
- * and control-x, type = studio810/type/*. Mirrors the component's own
+ * and control-x, type = studio810/type/*. Mirrors the variant's own
  * variable bindings one-for-one. */
 .btn--primary {
   display: inline-flex;
@@ -86,13 +87,13 @@ body {
   justify-content: center;
   border: none;
   cursor: pointer;
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--color-action-fill);
+  color: var(--color-action-fill-text);
   border-radius: var(--radius-control);
   padding: var(--space-control-y) var(--space-control-x);
-  font-family: var(--type-family), system-ui, sans-serif;
-  font-size: var(--type-size-label);
-  font-weight: var(--type-weight-label);
+  font-family: var(--type-family-body), serif;
+  font-size: var(--type-size-body);
+  font-weight: var(--type-weight-regular);
 }
 ${DRIFT ? '\n/* DELIBERATE DRIFT (negative test): raw value, not a published token */\n.drift-injected { background: #ff00aa; }\n' : ''}`;
 
@@ -105,7 +106,7 @@ const html = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Studio 810 — DS-001 POC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>

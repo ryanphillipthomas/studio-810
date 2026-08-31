@@ -2,12 +2,12 @@
   "description": "Registry of the Figma sources of design truth. The Design role syncs published variables/components from these into design/tokens/ via the Figma MCP.",
   "files": {
     "studio810-foundation": {
-      "name": "Studio 810 \u2014 DS-001 Foundation",
+      "name": "Studio 810 — DS-001 Foundation",
       "fileKey": "RNiGA3UTB9q80Wl8yOAsFX",
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
-      "scopeHint": "Single Foundation page (0:1). All content is studio810.* scope. Placeholder neutral palette until the Studio 810 brand palette is defined.",
-      "contains": "studio810 design system foundation: four variable collections (color, radius, space, type), each single-mode 'Light', totalling 12 variables, and one component.",
+      "scopeHint": "Single Foundation page (0:1). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px); provenance selectors recorded in each variable/style description and in the PR that landed them.",
+      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 34 variables, nine text styles, and two component sets.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -15,10 +15,23 @@
             "Light"
           ],
           "variables": [
-            "studio810/color/primary",
-            "studio810/color/on-primary",
-            "studio810/color/surface",
-            "studio810/color/on-surface"
+            "studio810/color/action-fill",
+            "studio810/color/action-fill-text",
+            "studio810/color/action-fill-hover",
+            "studio810/color/action-fill-disabled",
+            "studio810/color/surface-1",
+            "studio810/color/surface-2",
+            "studio810/color/surface-3",
+            "studio810/color/surface-4",
+            "studio810/color/text-inverse",
+            "studio810/color/text-ink",
+            "studio810/color/text-accent",
+            "studio810/color/border-focus",
+            "studio810/color/action-inverse-fill",
+            "studio810/color/action-inverse-text",
+            "studio810/color/action-inverse-fill-hover",
+            "studio810/color/action-inverse-fill-disabled",
+            "studio810/color/border-focus-inverse"
           ]
         },
         "studio810/radius": {
@@ -46,28 +59,112 @@
             "Light"
           ],
           "variables": [
-            "studio810/type/family",
-            "studio810/type/size-heading",
-            "studio810/type/size-label",
-            "studio810/type/weight-label",
-            "studio810/type/weight-regular"
+            "studio810/type/family-body",
+            "studio810/type/family-display",
+            "studio810/type/size-hero",
+            "studio810/type/size-h1",
+            "studio810/type/size-h2",
+            "studio810/type/size-h3",
+            "studio810/type/size-h4",
+            "studio810/type/size-wordmark",
+            "studio810/type/size-body",
+            "studio810/type/weight-regular",
+            "studio810/type/weight-bold"
           ]
+        },
+        "studio810/border": {
+          "id": "VariableCollectionId:10:16",
+          "modes": [
+            "Light"
+          ],
+          "variables": [
+            "studio810/border/hairline",
+            "studio810/border/focus-ring",
+            "studio810/border/focus-offset"
+          ]
+        }
+      },
+      "textStyles": {
+        "Brand/Hero/Desktop": {
+          "id": "S:0def3f09ff711083440a83c9007f725d2ecb6fac,",
+          "key": "0def3f09ff711083440a83c9007f725d2ecb6fac"
+        },
+        "Brand/Wordmark": {
+          "id": "S:c8b3a3acd0766fc8b1f98f7e77314b37a7a29718,",
+          "key": "c8b3a3acd0766fc8b1f98f7e77314b37a7a29718"
+        },
+        "Heading/H1": {
+          "id": "S:ffc7287a5d61139d31ab200d95c5c9301ecdb036,",
+          "key": "ffc7287a5d61139d31ab200d95c5c9301ecdb036"
+        },
+        "Heading/H2": {
+          "id": "S:4568815d8194ec97c9fe088226b5d46e676f06e5,",
+          "key": "4568815d8194ec97c9fe088226b5d46e676f06e5"
+        },
+        "Heading/H3": {
+          "id": "S:9d10bae247d954cc35883426294d54705c49ecff,",
+          "key": "9d10bae247d954cc35883426294d54705c49ecff"
+        },
+        "Heading/H4": {
+          "id": "S:1737babb90f09973e2c99de7bcf2d631afcde868,",
+          "key": "1737babb90f09973e2c99de7bcf2d631afcde868"
+        },
+        "UI/Body": {
+          "id": "S:1f984b35ecf53ffa78b9fdf0a317d171d3d928f0,",
+          "key": "1f984b35ecf53ffa78b9fdf0a317d171d3d928f0"
+        },
+        "UI/Body Strong": {
+          "id": "S:4297137748e7f96529e1508dbd2f46cc648b0e59,",
+          "key": "4297137748e7f96529e1508dbd2f46cc648b0e59"
+        },
+        "UI/Nav": {
+          "id": "S:20ef7ef7eb4693a860b06f6ce57620902148b51c,",
+          "key": "20ef7ef7eb4693a860b06f6ce57620902148b51c"
         }
       },
       "componentSets": {
         "Button/Primary": {
-          "nodeId": "1:5",
-          "key": "9e6c4c14adb3809bc63021e3687e46f3194d1859",
-          "variants": "none \u2014 single component with a Label text property; variants TBD",
-          "size": "92x43",
-          "bindings": "fills, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight are bound to studio810 variables"
+          "nodeId": "13:3",
+          "key": "8005841b495f653f031aa036a41cb6444bfbe6c2",
+          "variants": "State(Default|Hover|Focused|Disabled)",
+          "variantNodeIds": {
+            "State=Default": "1:5",
+            "State=Hover": "12:2",
+            "State=Focused": "12:4",
+            "State=Disabled": "12:6"
+          },
+          "size": "160x406",
+          "properties": [
+            "Label#13:0 (TEXT)",
+            "State (VARIANT)"
+          ],
+          "bindings": "each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-fill; Hover action-fill-hover; Disabled action-fill-disabled). State=Focused adds a 'Focus Ring' rectangle with stroke color (color/border-focus), per-side stroke weights (border/focus-ring) and corner radii (radius/control) bound; the ring's ±6px placement = focus-ring + focus-offset, positional geometry Figma cannot bind to variables.",
+          "deviations": "Size and Shape axes from the focx matrix intentionally omitted: the live site defines exactly one control size and one shape (no --small/--large or pill rules exist in its served CSS). Approved at Checkpoint 1, 2026-08-31."
+        },
+        "Button/Inverse": {
+          "nodeId": "17:7",
+          "key": "bd5001514c6b40d0ef13689288f1e4d63f0cb097",
+          "variants": "State(Default|Hover|Focused|Disabled)",
+          "variantNodeIds": {
+            "State=Default": "17:8",
+            "State=Hover": "17:10",
+            "State=Focused": "17:12",
+            "State=Disabled": "17:15"
+          },
+          "size": "160x406",
+          "properties": [
+            "Label#13:0 (TEXT)",
+            "State (VARIANT)"
+          ],
+          "bindings": "clone of Button/Primary's structure; each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-inverse-fill; Hover action-inverse-fill-hover; Disabled action-inverse-fill-disabled; labels action-inverse-text; Focus Ring stroke color border-focus-inverse). The set container's own fill is bound to color/surface-2 — the bright-theme terracotta backdrop the inverse button lives on — so white variants are visible on canvas.",
+          "deviations": "Same as Button/Primary: no Size/Shape axes (single measured size and shape). Hover/Disabled share a value because the live site renders both states as opacity .8; the label keeps action-inverse-text in those states because its color equals the flatten backdrop, making the flatten a mathematical no-op on the text. Approved by Ryan 2026-08-31 (\"add the inverse button too\")."
         }
       }
     }
   },
   "sync": {
     "tool": "figma-mcp",
-    "lastSync": "2026-08-31T16:46:06Z",
+    "lastSync": "2026-08-31T19:04:46Z",
     "syncedBy": "claude-code (Design role), authorized by Ryan"
   }
 }
