@@ -19,7 +19,7 @@ previews:
 
 services:
   - type: web
-    name: studio-810
+    name: wearestudio810
     runtime: static
     buildCommand: node tools/site-compose/index.mjs
     staticPublishPath: dist
