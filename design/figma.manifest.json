@@ -7,7 +7,7 @@
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
       "scopeHint": "Single Foundation page (0:1). All content is studio810.* scope. Placeholder neutral palette until the Studio 810 brand palette is defined.",
-      "contains": "studio810 design system foundation: four variable collections (color, radius, space, type), each single-mode 'Light', and one component.",
+      "contains": "studio810 design system foundation: four variable collections (color, radius, space, type), each single-mode 'Light', totalling 12 variables, and one component.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -16,7 +16,9 @@
           ],
           "variables": [
             "studio810/color/primary",
-            "studio810/color/on-primary"
+            "studio810/color/on-primary",
+            "studio810/color/surface",
+            "studio810/color/on-surface"
           ]
         },
         "studio810/radius": {
@@ -45,8 +47,10 @@
           ],
           "variables": [
             "studio810/type/family",
+            "studio810/type/size-heading",
             "studio810/type/size-label",
-            "studio810/type/weight-label"
+            "studio810/type/weight-label",
+            "studio810/type/weight-regular"
           ]
         }
       },
@@ -63,7 +67,7 @@
   },
   "sync": {
     "tool": "figma-mcp",
-    "lastSync": "2026-08-31T16:25:53Z",
+    "lastSync": "2026-08-31T16:46:06Z",
     "syncedBy": "claude-code (Design role), authorized by Ryan"
   }
 }

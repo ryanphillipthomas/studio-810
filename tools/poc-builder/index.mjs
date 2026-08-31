@@ -65,8 +65,9 @@ ${cssVars.join('\n')}
 body {
   font-family: var(--type-family), system-ui, sans-serif;
   font-size: var(--type-size-label);
-  font-weight: var(--type-weight-label);
-  color: var(--color-primary);
+  font-weight: var(--type-weight-regular);
+  background: var(--color-surface);
+  color: var(--color-on-surface);
   padding: var(--space-control-x);
 }
 
@@ -104,7 +105,7 @@ const html = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Studio 810 — DS-001 POC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
