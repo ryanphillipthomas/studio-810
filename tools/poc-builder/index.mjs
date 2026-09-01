@@ -2,19 +2,23 @@
 // poc-builder — Phase 2 deterministic builder.
 //
 // Generates the DS-001 POC page (apps/poc/) purely from the synced design
-// tokens and the one registered Figma component set: Button/Primary (13:3) in
-// Studio 810 — DS-001 Foundation. That set carries a Label text property and a
-// State variant axis (Default|Hover|Focused|Disabled); this static page renders
-// the State=Default variant (node 1:5). Interactive states land here when the
-// POC grows real interactivity, not before.
+// tokens and one of the registered Figma component sets: Button/Primary (13:3)
+// in Studio 810 — DS-001 Foundation. The library registers four sets as of run
+// 3 — Button/Primary, Button/Inverse, Link/Inline and Nav/Header — and this
+// page deliberately renders only the first. Button/Primary carries a Label text
+// property plus State(Default|Hover|Focused|Disabled) and Size(Default|Compact)
+// axes; this static page renders "State=Default, Size=Default" (node 1:5).
+// Interactive states and the other sets land here when the POC grows real
+// interactivity, not before.
 //
 // Deterministic on purpose: same tokens in → byte-identical output out,
 // regardless of trigger source. Every color and dimension is emitted once as a
 // CSS custom property taken verbatim from design/tokens/studio810/tokens.json, so
 // the output cannot pass the drift gate unless the tokens themselves did. The
-// page may only use what the Figma file actually publishes — 34 variables
-// today. A value the foundation does not publish is a design-system gap, not a
-// number to invent here.
+// page may only use what the Figma file actually publishes. A value the
+// foundation does not publish is a design-system gap, not a number to invent
+// here. The count is deliberately not restated in this comment: it moves every
+// run, and design/figma.manifest.json is the ledger that tracks it.
 //
 // Env:
 //   RUN_ID       — when set, writes pipeline/runs/$RUN_ID/50-build-report.json
