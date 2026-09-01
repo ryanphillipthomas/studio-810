@@ -7,7 +7,7 @@
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
       "scopeHint": "Four pages: Foundation (0:1) holds the variable collections, text styles and the Button sets; Global (36:2), Patterns (36:3) and Provenance (36:4) were added in run 3 to organise whole-site coverage (approved at Checkpoint 1, 2026-08-31). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px; 375px values recorded in each component spec but modelled only where the component is structurally different there). Provenance selectors are recorded in every text style description and in the descriptions of variables created from run 3 onward; the 34 variables from runs 1-2 carry no description — their provenance lives in the PRs that landed them. See findings.",
-      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 39 variables, nine text styles, and two component sets.",
+      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 39 variables, ten text styles, and three component sets.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -125,6 +125,10 @@
         "UI/Nav": {
           "id": "S:20ef7ef7eb4693a860b06f6ce57620902148b51c,",
           "key": "20ef7ef7eb4693a860b06f6ce57620902148b51c"
+        },
+        "UI/Link": {
+          "id": "S:407a83b90d87218ddefb17116dd59c035dbfd560,",
+          "key": "407a83b90d87218ddefb17116dd59c035dbfd560"
         }
       },
       "componentSets": {
@@ -168,6 +172,23 @@
           ],
           "bindings": "clone of Button/Primary's structure; each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-inverse-fill; Hover action-inverse-fill-hover; Disabled action-inverse-fill-disabled; labels action-inverse-text; Focus Ring stroke color border-focus-inverse). The set container's own fill is bound to color/surface-2 — the bright-theme terracotta backdrop the inverse button lives on — so white variants are visible on canvas.",
           "deviations": "Same as Button/Primary: no Size/Shape axes (single measured size and shape). Hover/Disabled share a value because the live site renders both states as opacity .8; the label keeps action-inverse-text in those states because its color equals the flatten backdrop, making the flatten a mathematical no-op on the text. Approved by Ryan 2026-08-31 (\"add the inverse button too\")."
+        },
+        "Link/Inline": {
+          "nodeId": "49:8",
+          "key": "2f95842cbd7ea7fefdd3666218bc8be170a500c9",
+          "page": "Global (36:2)",
+          "variants": "Theme(Default|Brand)",
+          "variantNodeIds": {
+            "Theme=Default": "49:4",
+            "Theme=Brand": "49:7"
+          },
+          "size": "232x112",
+          "properties": [
+            "Label#49:0 (TEXT)",
+            "Theme (VARIANT)"
+          ],
+          "bindings": "Each variant is a transparent hug/hug auto-layout frame holding one TEXT node carrying the Label#49:0 property. Type comes from the UI/Link text style, whose fontSize, fontFamily and fontWeight bind to studio810/type/size-body, family-body and weight-regular. Link colour is set on the node, not the style, because it is the one property that varies by theme: Theme=Default binds color/action-fill (#d4967d), Theme=Brand binds color/action-inverse-fill (#ffffff). The set container's fill binds to color/surface-1 so both variants are legible on canvas - a review affordance, not a property of the component; the variant frames themselves are transparent, matching the measured background-color rgba(0,0,0,0).",
+          "deviations": "Underline thickness (1px) and offset (0.2em, stored as 20% of font size) live on the UI/Link text style as raw values because Figma's bindable text fields do not include textDecoration* - the same class of limitation as the focus ring's positional geometry. studio810/border/underline-offset (=20) documents the value for the code mirror rather than driving Figma, and is a percent among px-valued siblings in that collection; studio810/type would be the more coherent home, left where Checkpoint 1 put it. Build hazard recorded: setting textDecoration directly on a TEXT node that has a text style applied is silently discarded - the style owns the property - which is why UI/Link exists rather than node-level decoration. No State axis: inline links have no hover (the p a:hover rule is scoped to .tweak-global-animations-animation-type-flex and the body carries -type-fade), and their focus outline comes from the global :focus rule rather than from this component, so it is recorded in the style description rather than modelled as a variant. Theme(Default|Brand) covers the two measured link colours; Default is correct on the white, light-bold, dark-bold and site-default themes, Brand only on bright."
         }
       },
       "pages": {
@@ -183,5 +204,5 @@
     "lastSync": "2026-08-31T19:04:46Z",
     "syncedBy": "claude-code (Design role), authorized by Ryan"
   },
-  "pendingPublish": "Run 3 built these into the file but a library publish is a Figma UI action with no Plugin API equivalent (figma.publishAsync does not exist; figma.teamLibrary is read-only). Unpublished as of this commit: variables studio810/space/control-x-sm, studio810/space/control-y-sm, studio810/type/line-control-sm, studio810/color/border-focus-brand, studio810/border/underline-offset; the Size property and the four Size=Compact variants on Button/Primary (13:3). design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values."
+  "pendingPublish": "Run 3 built these into the file but a library publish is a Figma UI action with no Plugin API equivalent (figma.publishAsync does not exist; figma.teamLibrary is read-only). Unpublished as of this commit: variables studio810/space/control-x-sm, studio810/space/control-y-sm, studio810/type/line-control-sm, studio810/color/border-focus-brand, studio810/border/underline-offset; the Size property and the four Size=Compact variants on Button/Primary (13:3); the UI/Link text style; and the whole Link/Inline set (49:8). design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values."
 }
