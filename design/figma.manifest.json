@@ -482,10 +482,10 @@
   },
   "sync": {
     "tool": "figma-mcp",
-    "lastSync": "2026-08-31T19:04:46Z",
-    "syncedBy": "claude-code (Design role), authorized by Ryan"
+    "lastSync": "2026-09-01T16:50:00Z",
+    "syncedBy": "claude-code (Design role), authorized by Ryan — publish confirmed via key-import test (4/4 run-3 component keys resolved through figma.importComponentByKeyAsync/importComponentSetByKeyAsync, which only succeed against published keys)"
   },
-  "pendingPublish": "Unpublished as of this commit: EVERY studio810/* variable and text style in the file - the original 34 from runs 1-2 (descriptions backfilled this run) plus all created in run 3 (82 total); the Size property and Size=Compact variants on Button/Primary (13:3); and all sixteen component sets built in run 3 (Link/Inline 49:8, Nav/Header 58:81, Nav/Mobile 76:9, Block/ContactInfo 79:25, Footer/Contact 109:270, Section/PageHeader 81:24, Hero/Full 109:271, Gallery/Reel 109:272, Icon/Instagram 98:21, Icon/Cart 98:27, List/AmenityItem 99:6, Plan/Membership 102:17, Profile/Person 104:20, Profile/Pet 106:18, Gallery/Grid 112:6, Embed/Calendar 112:9). design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values. Publish via: Figma > DS-001 file > Assets panel > Libraries > Publish.",
+  "pendingPublish": "RESOLVED 2026-09-01: Ryan published the library from the Figma UI. Confirmed via key-import test rather than a self-report - figma.publishAsync does not exist and no MCP tool reads a definitive publish timestamp, so importComponentByKeyAsync/importComponentSetByKeyAsync were run against four of this run's new component keys (Link/Inline, Nav/Header, List/AmenityItem, Icon/Instagram); all four resolved, which only happens against published keys. design/tokens/studio810/tokens.json has been synced from the published state - all 82 variables and 10 text styles, verified against drift-check, contracts and poc-builder.",
   "buildHazards": [
     "Figma's clone() does not carry componentPropertyReferences: cloned variants silently lose their TEXT property and must have it reassigned. Hit on Button/Primary Size=Compact.",
     "Setting textDecoration directly on a TEXT node that has a text style applied is silently discarded - the style owns the property. This is why UI/Link exists rather than node-level decoration.",
