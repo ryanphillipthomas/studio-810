@@ -7,7 +7,7 @@
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
       "scopeHint": "Four pages: Foundation (0:1) holds the variable collections, text styles and the Button sets; Global (36:2), Patterns (36:3) and Provenance (36:4) were added in run 3 to organise whole-site coverage (approved at Checkpoint 1, 2026-08-31). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px; 375px values recorded in each component spec but modelled only where the component is structurally different there). Provenance selectors are recorded in every text style description and in the descriptions of variables created from run 3 onward; the 34 variables from runs 1-2 carry no description — their provenance lives in the PRs that landed them. See findings.",
-      "contains": "studio810 design system foundation: seven variable collections (color, radius, space, type, border, size, opacity), each single-mode 'Light', totalling 78 variables, ten text styles, and twelve component sets.",
+      "contains": "studio810 design system foundation: seven variable collections (color, radius, space, type, border, size, opacity), each single-mode 'Light', totalling 81 variables, ten text styles, and 16 component sets.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -32,7 +32,8 @@
             "studio810/color/action-inverse-fill-hover",
             "studio810/color/action-inverse-fill-disabled",
             "studio810/color/border-focus-inverse",
-            "studio810/color/border-focus-brand"
+            "studio810/color/border-focus-brand",
+            "studio810/color/text-brand"
           ]
         },
         "studio810/radius": {
@@ -101,7 +102,10 @@
             "studio810/type/size-nav-mobile",
             "studio810/type/size-nav-mobile-back",
             "studio810/type/size-wordmark-mobile",
-            "studio810/type/size-lead"
+            "studio810/type/size-lead",
+            "studio810/type/size-plan-title",
+            "studio810/type/size-plan-price",
+            "studio810/type/size-small"
           ]
         },
         "studio810/border": {
@@ -298,8 +302,8 @@
           "deviations": "Discovered mid-build, ahead of Footer/Contact: the reusable unit across the site is this Label+Value atom, not a page-specific block, because /contact's single content block is three repeated h4+p pairs and the footer is two columns of the same pair - identical structure, different composition. Reordered ahead of Footer/Contact from the Checkpoint-1 sequence (approved). Content=Links exists because the footer's first value contains two real anchor tags, and a Figma TEXT property cannot hold a nested component."
         },
         "Footer/Contact": {
-          "nodeId": "79:26",
-          "key": "(instance composition - no distinct component key; see notes)",
+          "nodeId": "109:270",
+          "key": "cf1e525c1383df9249c101f44a544ee8088e2012",
           "page": "Global (36:2)",
           "variants": "none — identical on all 8 pages",
           "size": "1425x297 at 1440px canvas",
@@ -307,7 +311,8 @@
             "none — composes two Block/ContactInfo instances directly"
           ],
           "bindings": "Section shell: fill surface-2, padding space/section-y (top/bottom) and space/grid-edge (left/right), min-height 297 fixed. Holds a Block/ContactInfo Content=Links instance (664px, studio address + mailto/tel) and a Content=Text instance (158px, Hours), laid out space-between. Column widths (664, 158) are measured pixel values from the live 26-track fluid-engine grid, not independently tokenised - the grid's own edge and gutter are (grid-edge, grid-gutter) but individual track spans are not, matching how column widths are handled elsewhere in this file.",
-          "deviations": "Not itself published as a standalone component set with variants - it is the specific composition of Block/ContactInfo used site-wide, recorded here for completeness of the manifest's component inventory even though its 'component set' framing is looser than the others (no variant axis, since the footer never changes)."
+          "deviations": "Not itself published as a standalone component set with variants - it is the specific composition of Block/ContactInfo used site-wide, recorded here for completeness of the manifest's component inventory even though its 'component set' framing is looser than the others (no variant axis, since the footer never changes). CORRECTED at close-out: this was originally built as a plain FRAME, not a real Figma COMPONENT node - it audited clean and looked identical, but a frame is not publishable to a library. Converted via createComponentFromNode; node ID changed accordingly (old ID retained here for history).",
+          "oldNodeId": "79:26"
         },
         "Section/PageHeader": {
           "nodeId": "81:24",
@@ -329,8 +334,8 @@
           "deviations": "/contact was dropped from this component's page list: its 'header' is literally the first Block/ContactInfo atom (H4 'Contact' + address), already built, and modelling a fourth shape for one page would have meant inventing a shape nothing on the live site has. Split is genuinely mirrored, not one layout reused - Amenities (image left, dark) and Membership (image right, light) are opposite structures, confirmed by reading live DOM order and computed positions (the seed's 'full-width interior hero image' claim for Amenities was itself wrong; neither Split page has a full-width image). Only 3 of the 6 possible Layout x Theme combinations exist as variants, matching what the live site actually uses - Brand does not appear on any page-header instance and is not modelled. Title-to-lead gaps are NOT tokenised: measured 19.86px (Amenities), 100.06px (Membership), 28.71px/39.36px (Availability/Residents) for what looks like the same relationship - these are fluid-engine grid-row artifacts, not a design value, so each variant uses its own measured local gap, consistent with how column widths are handled elsewhere in this file. Residents' internal inconsistency is preserved as measured: its H2 is text-align:center but its lead paragraph is text-align:start. Image placeholders are semi-transparent fills sized to the real measured image box, not embedded photos. Show CTA hides both the CTA instance and its gap spacer together (the same boolean-occlusion pattern as Nav/Header's dropdown and Nav/Mobile's folder), so height hugs correctly in both states. Build hazard hit again: type/size-lead and space/section-y-sm were both approved at Checkpoint 1 and never created - the third time this exact miss has happened - and a first build attempt failed atomically on the missing token, which also rolled back an earlier successful token creation in the same script; both were created together on retry."
         },
         "Hero/Full": {
-          "nodeId": "85:4",
-          "key": "(single component, no variants)",
+          "nodeId": "109:271",
+          "key": "d213649b54ef495fb6017bd6fb1d5167417de890",
           "page": "Patterns (36:3)",
           "variants": "none — appears once, Home only, never changes",
           "size": "1425x900 at 1440px canvas",
@@ -338,11 +343,12 @@
             "none"
           ],
           "bindings": "Vertical auto-layout, fill surface-2, padding space/section-y-hero (top) and space/grid-edge (left/right). Holds the Brand/Hero/Desktop eyebrow ('STUDIO 810', 232px, published run 1/2) over the Heading/H2 headline ('Make it yours.', 46.24px, published). First component built this run that needed zero new tokens and zero new text styles - pure assembly of already-published assets.",
-          "deviations": "CORRECTION: the site inventory and Checkpoint-1 checklist both claimed a video background. There is no video. The background is data-controller=\"BackgroundContours\", Squarespace's canvas/WebGL procedural gradient effect - confirmed by zero video network requests and a bare <canvas> with no video/image feeding it. Modelled as the surface-2 base fill only; the animated effect itself has no static asset to place in Figma, the same class of limitation as the Google Calendar iframe. The pause button is not modelled - already declared out of scope at Checkpoint 1 as Squarespace system chrome. The visible ~265px gap between eyebrow and headline live is NOT a margin - both elements measure margin:0 in the live CSS; the gap is pure line-height overshoot from the 232px display face. Figma mirrors the true margin:0 relationship (itemSpacing 0) rather than reproducing a rendering-engine artifact. Build hazard: space/section-y-hero was the fifth token this run approved at Checkpoint 1 but never actually created before being needed - same recurring miss as Nav/Header, Nav/Mobile and Section/PageHeader (twice). Testing-environment note, not a design finding: in this session's automated browser, the eyebrow's sqsrte-scaled-text fit-to-width script did not visibly run at 1440px (flat 16px, no transform) even after dispatching resize/scroll events; Ryan confirmed on a real device it does scale, so the published Brand/Hero/Desktop value (232px) was trusted over the broken automated measurement. Flagged so a future run does not trust this specific pattern from automation alone."
+          "deviations": "CORRECTION: the site inventory and Checkpoint-1 checklist both claimed a video background. There is no video. The background is data-controller=\"BackgroundContours\", Squarespace's canvas/WebGL procedural gradient effect - confirmed by zero video network requests and a bare <canvas> with no video/image feeding it. Modelled as the surface-2 base fill only; the animated effect itself has no static asset to place in Figma, the same class of limitation as the Google Calendar iframe. The pause button is not modelled - already declared out of scope at Checkpoint 1 as Squarespace system chrome. The visible ~265px gap between eyebrow and headline live is NOT a margin - both elements measure margin:0 in the live CSS; the gap is pure line-height overshoot from the 232px display face. Figma mirrors the true margin:0 relationship (itemSpacing 0) rather than reproducing a rendering-engine artifact. Build hazard: space/section-y-hero was the fifth token this run approved at Checkpoint 1 but never actually created before being needed - same recurring miss as Nav/Header, Nav/Mobile and Section/PageHeader (twice). Testing-environment note, not a design finding: in this session's automated browser, the eyebrow's sqsrte-scaled-text fit-to-width script did not visibly run at 1440px (flat 16px, no transform) even after dispatching resize/scroll events; Ryan confirmed on a real device it does scale, so the published Brand/Hero/Desktop value (232px) was trusted over the broken automated measurement. Flagged so a future run does not trust this specific pattern from automation alone. CORRECTED at close-out: this was originally built as a plain FRAME, not a real Figma COMPONENT node - it audited clean and looked identical, but a frame is not publishable to a library. Converted via createComponentFromNode; node ID changed accordingly (old ID retained here for history).",
+          "oldNodeId": "85:4"
         },
         "Gallery/Reel": {
-          "nodeId": "97:20",
-          "key": "(single component, no variants)",
+          "nodeId": "109:272",
+          "key": "3a8e726800bb41d9d2d86758e42bbde4f8be5bf2",
           "page": "Patterns (36:3)",
           "variants": "none — appears once, Home only",
           "size": "1425x720 at 1440px canvas",
@@ -350,7 +356,8 @@
             "none"
           ],
           "bindings": "Plain frame (not auto-layout - children positioned by x/y), fill surface-3. One slide-image placeholder, 1175x661, inset space/reel-inset (125px) each side. Two control buttons, 44x44 bound to size/reel-control, 8px padding, positioned at the measured relX:25/79, relY:676 (left-aligned, flush to the section's bottom edge, NOT centred under the image), 10px gap between them. Each holds a real chevron built from the site's own SVG path data (viewBox 0 0 60 30, paths 'M15.9,23.7L7.1,15l8.7-8.7' and 'M52.9,15H8.5', stroke-only, no fill) - Next is Previous mirrored via scale(-1,1), not redrawn.",
-          "deviations": "space/reel-inset (125px) is a new token, not in the approved 36 - found only by measuring this component: (1425 section width - 1175 image width) / 2. size/reel-control (44px) was approved at Checkpoint 1 and created here on first use, same recurring miss as five prior components. Live CSS uses object-fit:fill on the slide image (stretches to the box, no crop) - unlike every other image on the site, which crops with object-fit:cover. Recorded as a live-site inconsistency, not reproduced (the placeholder fill has no aspect ratio to distort). Slide image is a placeholder, not real photography, matching every other image slot this run."
+          "deviations": "space/reel-inset (125px) is a new token, not in the approved 36 - found only by measuring this component: (1425 section width - 1175 image width) / 2. size/reel-control (44px) was approved at Checkpoint 1 and created here on first use, same recurring miss as five prior components. Live CSS uses object-fit:fill on the slide image (stretches to the box, no crop) - unlike every other image on the site, which crops with object-fit:cover. Recorded as a live-site inconsistency, not reproduced (the placeholder fill has no aspect ratio to distort). Slide image is a placeholder, not real photography, matching every other image slot this run. CORRECTED at close-out: this was originally built as a plain FRAME, not a real Figma COMPONENT node - it audited clean and looked identical, but a frame is not publishable to a library. Converted via createComponentFromNode; node ID changed accordingly (old ID retained here for history).",
+          "oldNodeId": "97:20"
         },
         "Icon/Instagram": {
           "nodeId": "98:21",
@@ -375,6 +382,61 @@
           ],
           "bindings": "Single vector group (two circles + one path) built from the site's own SVG path data (viewBox 0 0 31 24), stroke-only, 1px stroke width, no fill - matches .header-actions--right svg.icon--cart exactly. Stroke defaults to text-inverse; every consumer overrides the nested strokes to its own theme colour on the instance.",
           "deviations": "Same retrofit history as Icon/Instagram - extracted after Nav/Header and Nav/Mobile were built independently, consolidated on Ryan's decision during a mid-run stock-take."
+        },
+        "List/AmenityItem": {
+          "nodeId": "99:6",
+          "key": "c7a6a333421c5339e6a57a958ab7bcdc45df725d",
+          "page": "Patterns (36:3)",
+          "variants": "none — one repeating item, 16 real instances on /amenities, always the same theme",
+          "size": "304.8 wide, hug height",
+          "properties": [
+            "Label#99:0 (TEXT)",
+            "Body#99:1 (TEXT)"
+          ],
+          "bindings": "Vertical auto-layout, fixed width 304.8, hug height (verified growing 111->135 when swapped to longer body copy, matching the two heights observed live - 180.21/218.45 - which are content-driven, not a fixed value). Heading/H4 label over a UI/Body value, both centered, spaced by space/stack-md (label-to-body) and space/stack-sm within. Fill surface-1, text text-inverse - the /amenities grid section is Dark theme.",
+          "deviations": "None. Cleanest build this run: every property resolved to an already-published or already-created token, zero new tokens needed. Live markup wraps each H4 label in <strong> (cosmetic double-bold from the rich-text editor, same incidental pattern already recorded on Block/ContactInfo's Phone/Email atoms) - not modelled as a distinct style, Heading/H4 already covers it."
+        },
+        "Plan/Membership": {
+          "nodeId": "102:17",
+          "key": "6cef0843d5fcc4405e1305d06b9f9e57714a50bb",
+          "page": "Patterns (36:3)",
+          "variants": "none — three real plans (Space $250, Photography $350, Photography Plus $500) differ only in content",
+          "size": "382.64 wide, hug height",
+          "properties": [
+            "Title#102:0 (TEXT)",
+            "Price#102:1 (TEXT)",
+            "Feature 1#102:2 (TEXT)",
+            "Feature 2#102:3 (TEXT)"
+          ],
+          "bindings": "Vertical auto-layout, transparent fill (matches the live .product-block, borderless/bg-less on its dark-bold section). Title (type/size-plan-title 21.04, no underline) over Price (type/size-plan-price 17.68) over a fixed 2-row bulleted Feature List (4x4 ellipse bullet + UI/Body text, 40px left inset matching the live <ul> padding-left, space/stack-sm above/below) over a real nested Button/Primary, State=Default, Size=Compact instance stretched to fill width, matching the live 382.64px full-width Apply button exactly.",
+          "deviations": "Feature list is fixed at 2 rows, not a freely-editable list - Figma TEXT properties are flat strings and cannot carry live <ul><li> disc markers. Title-to-price gap (4.2px) is not tokenised - a title line-height artifact, not a design value, same reasoning already applied to Section/PageHeader's title-lead gaps. Build hazard: re-querying feature-row text nodes by name AFTER wrapping the card in createComponentFromNode failed (structural re-parenting changes what a name-based query finds); fixed by capturing live node references during creation instead of re-querying the tree afterward. Two type tokens (size-plan-title, size-plan-price) were approved at Checkpoint 1 and created here on first use, same recurring pattern as prior components."
+        },
+        "Profile/Person": {
+          "nodeId": "104:20",
+          "key": "b0c8830188064b2dbb1e0654986e9378536f9215",
+          "page": "Patterns (36:3)",
+          "variants": "none — two real instances (Jaqi, Ryan) on /residents, content-only difference",
+          "size": "495.11 wide, hug height",
+          "properties": [
+            "Name#104:0 (TEXT)",
+            "Role#104:1 (TEXT)",
+            "Bio#104:2 (TEXT)"
+          ],
+          "bindings": "Vertical auto-layout, transparent fill. Photo placeholder (495.11x630.63) over Name (Heading/H4, fixed width 326.41 - narrower than everything else in the column) over Role (type/size-small 14.272/21.408, wrapped in <strong> in the live markup - cosmetic, same incidental pattern as Block/ContactInfo/List/AmenityItem) over Bio (UI/Body). All left-aligned, single stacked column, not side-by-side with the photo. Gaps: photo-to-name 51.1px (explicit spacer, no matching token), name-to-role and role-to-bio both 11px = space/grid-gutter (explicit spacer frames, since Figma auto-layout only supports one uniform itemSpacing per frame and these three gaps are not uniform).",
+          "deviations": "Build hazard: first attempt left in debug cruft from a mid-write refactor - an accidental self-assignment (name.setBoundVariable = name.setBoundVariable) that threw read-only property immediately, caught before anything was created. Rewrote cleanly on retry."
+        },
+        "Profile/Pet": {
+          "nodeId": "106:18",
+          "key": "888ea30788ef46f6449214795a135426952a3d8c",
+          "page": "Patterns (36:3)",
+          "variants": "none — two real instances (Oliver, Stewart) on /residents, content-only difference",
+          "size": "326.41 wide, hug height",
+          "properties": [
+            "Name#106:2 (TEXT)",
+            "Bio#106:3 (TEXT)"
+          ],
+          "bindings": "Vertical auto-layout, centred, fixed width 326.41 shared by the image container, name and bio. Photo placeholder (300.35x349.91, narrower than its 326.41 column - object-fit:contain letterboxes rather than object-fit:cover crops, unlike Profile/Person) over a combined name+descriptor H4 ('Oliver - Cat / Entertainer', one line, no <strong> wrap this time) in color/text-brand over a UI/Body bio in color/text-ink. Both gaps 11px = space/grid-gutter. The terracotta-heading/dark-body colour split matches the Stone (surface-4) surface this sits on, per Section/Standard's documented convention.",
+          "deviations": "color/text-brand - the FIRST row of the original approved-34 list from Checkpoint 1 - had never been created across any prior component that could have used it, surfacing only on this, the last of the 16. Same recurring build hazard as five prior components."
         }
       },
       "pages": {
@@ -398,10 +460,12 @@
     "lastSync": "2026-08-31T19:04:46Z",
     "syncedBy": "claude-code (Design role), authorized by Ryan"
   },
-  "pendingPublish": "Run 3 built all of the following into the file, but a library publish is a Figma UI action with no Plugin API equivalent (figma.publishAsync does not exist; figma.teamLibrary is read-only). Unpublished as of this commit: every studio810/* variable and text style created this run (see variableCollections above for the full list), the Size property and Size=Compact variants on Button/Primary (13:3), and the Link/Inline (49:8), Nav/Header (58:81), Nav/Mobile (76:9), Block/ContactInfo (79:25), Footer/Contact (79:26), Section/PageHeader (81:24), Hero/Full (85:4), Gallery/Reel (97:20), Icon/Instagram (98:21) and Icon/Cart (98:27) sets. design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values.",
+  "pendingPublish": "Unpublished as of this commit: EVERY studio810/* variable and text style in the file - the original 34 from runs 1-2 (descriptions backfilled this run, see provenanceBackfill below) plus all created in run 3 (81 total); the Size property and Size=Compact variants on Button/Primary (13:3); and all sixteen component sets built in run 3 (Link/Inline 49:8, Nav/Header 58:81, Nav/Mobile 76:9, Block/ContactInfo 79:25, Footer/Contact 79:26, Section/PageHeader 81:24, Hero/Full 85:4, Gallery/Reel 97:20, Icon/Instagram 98:21, Icon/Cart 98:27, List/AmenityItem 99:6, Plan/Membership 102:17, Profile/Person 104:20, Profile/Pet 106:18). design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values. Publish via: Figma > DS-001 file > Assets panel > Libraries > Publish.",
   "buildHazards": [
     "Figma's clone() does not carry componentPropertyReferences: cloned variants silently lose their TEXT property and must have it reassigned. Hit on Button/Primary Size=Compact.",
     "Setting textDecoration directly on a TEXT node that has a text style applied is silently discarded - the style owns the property. This is why UI/Link exists rather than node-level decoration.",
-    "setBoundVariable() with an undefined variable silently no-ops rather than throwing. Nine Checkpoint-1 tokens had been approved but never created, so every padding bind on Nav/Header quietly did nothing. Every build now asserts each token resolves and throws on a miss."
-  ]
+    "setBoundVariable() with an undefined variable silently no-ops rather than throwing. Nine Checkpoint-1 tokens had been approved but never created, so every padding bind on Nav/Header quietly did nothing. Every build now asserts each token resolves and throws on a miss.",
+    "A manifest-update script for List/AmenityItem (commit 2fe26e7) read a stale on-disk copy of design/figma.manifest.json rather than the actual current state, silently discarding 9 of 12 component set entries and three top-level fields (pendingPublish, buildHazards, designSystemConventions) that a prior commit had already added. Not caught until the run-3 close-out, four commits later. Nothing was unrecoverable - full state existed in git history - but every subsequent manifest-write script now diffs component-set and variable counts against expectation before committing, rather than trusting the read."
+  ],
+  "provenanceBackfill": "Close-out, run 3: all 34 pre-run-3 variables (published in runs 1-2 with empty descriptions) were backfilled with provenance reconstructed from verified cross-referenced usage across every component built this run - NOT the original run 1-2 measurement notes, which were never recorded in Figma and are lost. Each description says so explicitly. Two items (text-accent, border/hairline) are honestly flagged as unconsumed by anything built this run rather than given invented provenance."
 }
