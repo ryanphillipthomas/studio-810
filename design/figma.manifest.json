@@ -7,7 +7,7 @@
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
       "scopeHint": "Four pages: Foundation (0:1) holds the variable collections, text styles and the Button sets; Global (36:2), Patterns (36:3) and Provenance (36:4) were added in run 3 to organise whole-site coverage (approved at Checkpoint 1, 2026-08-31). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px; 375px values recorded in each component spec but modelled only where the component is structurally different there). Provenance selectors are recorded in every text style description and in the descriptions of variables created from run 3 onward; the 34 variables from runs 1-2 carry no description — their provenance lives in the PRs that landed them. See findings.",
-      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 39 variables, ten text styles, and three component sets.",
+      "contains": "studio810 design system foundation: six variable collections (color, radius, space, type, border, size), each single-mode 'Light', totalling 52 variables, ten text styles, and four component sets.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -53,7 +53,15 @@
             "studio810/space/control-x",
             "studio810/space/control-y",
             "studio810/space/control-x-sm",
-            "studio810/space/control-y-sm"
+            "studio810/space/control-y-sm",
+            "studio810/space/header-y",
+            "studio810/space/section-x",
+            "studio810/space/nav-item-x",
+            "studio810/space/nav-item-y",
+            "studio810/space/folder-x",
+            "studio810/space/folder-y",
+            "studio810/space/cart-badge-gap",
+            "studio810/space/header-gap"
           ]
         },
         "studio810/type": {
@@ -73,7 +81,8 @@
             "studio810/type/size-body",
             "studio810/type/weight-regular",
             "studio810/type/weight-bold",
-            "studio810/type/line-control-sm"
+            "studio810/type/line-control-sm",
+            "studio810/type/line-nav-folder"
           ]
         },
         "studio810/border": {
@@ -86,6 +95,18 @@
             "studio810/border/focus-ring",
             "studio810/border/focus-offset",
             "studio810/border/underline-offset"
+          ]
+        },
+        "studio810/size": {
+          "id": "VariableCollectionId:52:2",
+          "modes": [
+            "Light"
+          ],
+          "variables": [
+            "studio810/size/header-max-width",
+            "studio810/size/folder-min-width",
+            "studio810/size/icon-social",
+            "studio810/size/icon-cart"
           ]
         }
       },
@@ -189,6 +210,24 @@
           ],
           "bindings": "Each variant is a transparent hug/hug auto-layout frame holding one TEXT node carrying the Label#49:0 property. Type comes from the UI/Link text style, whose fontSize, fontFamily and fontWeight bind to studio810/type/size-body, family-body and weight-regular. Link colour is set on the node, not the style, because it is the one property that varies by theme: Theme=Default binds color/action-fill (#d4967d), Theme=Brand binds color/action-inverse-fill (#ffffff). The set container's fill binds to color/surface-1 so both variants are legible on canvas - a review affordance, not a property of the component; the variant frames themselves are transparent, matching the measured background-color rgba(0,0,0,0).",
           "deviations": "Underline thickness (1px) and offset (0.2em, stored as 20% of font size) live on the UI/Link text style as raw values because Figma's bindable text fields do not include textDecoration* - the same class of limitation as the focus ring's positional geometry. studio810/border/underline-offset (=20) documents the value for the code mirror rather than driving Figma, and is a percent among px-valued siblings in that collection; studio810/type would be the more coherent home, left where Checkpoint 1 put it. Build hazard recorded: setting textDecoration directly on a TEXT node that has a text style applied is silently discarded - the style owns the property - which is why UI/Link exists rather than node-level decoration. No State axis: inline links have no hover (the p a:hover rule is scoped to .tweak-global-animations-animation-type-flex and the body carries -type-fade), and their focus outline comes from the global :focus rule rather than from this component, so it is recorded in the style description rather than modelled as a variant. Theme(Default|Brand) covers the two measured link colours; Default is correct on the white, light-bold, dark-bold and site-default themes, Brand only on bright."
+        },
+        "Nav/Header": {
+          "nodeId": "58:81",
+          "key": "cdfec60aab4eed809f668818cba7d550362883c4",
+          "page": "Global (36:2)",
+          "variants": "Theme(Dark|Brand|Light)",
+          "variantNodeIds": {
+            "Theme=Dark": "58:3",
+            "Theme=Brand": "58:4",
+            "Theme=Light": "58:42"
+          },
+          "size": "1440x139.28 per variant",
+          "properties": [
+            "Show Dropdown#58:0 (BOOLEAN)",
+            "Theme (VARIANT)"
+          ],
+          "bindings": "Bar: padding bound to space/header-y and space/section-x; fill bound to the section surface the transparent header overlays (surface-1 Dark, surface-2 Brand, surface-3 Light). Three fixed columns at the measured 25/50/25 split of the content box (338.4/676.8/338.4 at a 1440 canvas). Centre stacks the Brand/Wordmark text style over a nav row with space/header-gap; each of the seven nav items is a frame padded by space/nav-item-x and space/nav-item-y around a UI/Nav label. Right column holds the cart (glyph built from the site's own stroke path data, 25px, strokes bound; count badge in UI/Nav) spaced by space/cart-badge-gap, then a real nested INSTANCE of the published Button/Primary (Dark, Light) or Button/Inverse (Brand) set - not a copy. Folder dropdown is absolutely positioned inside the Settings item, fill bound to the theme surface, padding to space/folder-x and space/folder-y, width fixed 232, minWidth bound to size/folder-min-width, items bound directly to type/family-body, size-body, weight-regular and type/line-nav-folder. Foreground colour across wordmark, nav, folder, both icons and the badge is text-inverse (Dark, Brand) or text-ink (Light). Audited run 3: 15 bound fills and 3 bound strokes per variant, every padding bound, zero raw values.",
+          "deviations": "The variant fill represents the SECTION the header overlays, not a header background - the live header is position:absolute and transparent and takes its colour from the first section, whose data-section-theme also drives the header class. That is why Theme has exactly three values: bright, dark and white are the three top-section themes in use, and each produces a distinct foreground plus a distinct CTA component. Dropdown width 232 is derived from two measured values: the live min-width:200px is content-box, so the border box is 200 + 2 x space/folder-x. Dropdown placement (x -16, y 27.2) is positional geometry Figma cannot bind, same class as the focus ring. The Instagram glyph replicates the live transform exactly (symbol viewBox 0 0 64 64 scaled 110/64, windowed at viewBox 23 23 64 64) rather than a hand-chosen crop; createNodeFromSvg adds an opaque wrapper fill which was cleared to match the live SVG. Cart badge uses UI/Nav 16/24 where the live badge computes 16/25 - a 1px line-box difference not worth a token. No hover or focus modelled: desktop nav links measurably have neither (the ::after underline rule is scoped to .tweak-global-animations-animation-type-flex and the body carries -type-fade), and focus comes from the global :focus rule rather than from this component. Show Dropdown is a BOOLEAN property rather than six variants. Geometry residue against live is font-metric only: bar 139.28 vs 138.54, nav row 636.52 vs 633.48, cart 38.67 vs 38.195."
         }
       },
       "pages": {
@@ -204,5 +243,10 @@
     "lastSync": "2026-08-31T19:04:46Z",
     "syncedBy": "claude-code (Design role), authorized by Ryan"
   },
-  "pendingPublish": "Run 3 built these into the file but a library publish is a Figma UI action with no Plugin API equivalent (figma.publishAsync does not exist; figma.teamLibrary is read-only). Unpublished as of this commit: variables studio810/space/control-x-sm, studio810/space/control-y-sm, studio810/type/line-control-sm, studio810/color/border-focus-brand, studio810/border/underline-offset; the Size property and the four Size=Compact variants on Button/Primary (13:3); the UI/Link text style; and the whole Link/Inline set (49:8). design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values."
+  "pendingPublish": "Run 3 built all of the following into the file, but a library publish is a Figma UI action with no Plugin API equivalent (figma.publishAsync does not exist; figma.teamLibrary is read-only). Unpublished as of this commit: 18 new variables (space/control-x-sm, control-y-sm, header-y, section-x, nav-item-x, nav-item-y, folder-x, folder-y, cart-badge-gap, header-gap; type/line-control-sm, line-nav-folder; color/border-focus-brand; border/underline-offset; the whole new studio810/size collection with header-max-width, folder-min-width, icon-social, icon-cart); the UI/Link text style; the Size property and four Size=Compact variants on Button/Primary (13:3); and the Link/Inline (49:8) and Nav/Header (58:81) sets. design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values. Publish via: Figma > DS-001 file > Assets panel > Libraries > Publish.",
+  "buildHazards": [
+    "Figma's clone() does not carry componentPropertyReferences: cloned variants silently lose their TEXT property and must have it reassigned. Hit on Button/Primary Size=Compact.",
+    "Setting textDecoration directly on a TEXT node that has a text style applied is silently discarded - the style owns the property. This is why UI/Link exists rather than node-level decoration.",
+    "setBoundVariable() with an undefined variable silently no-ops rather than throwing. Nine Checkpoint-1 tokens had been approved but never created, so every padding bind on Nav/Header quietly did nothing. Every build now asserts each token resolves and throws on a miss."
+  ]
 }
