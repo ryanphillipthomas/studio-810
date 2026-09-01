@@ -1,0 +1,36 @@
+{
+  "deployId": "dep-daavtvu7bikc73fk9d80",
+  "environment": "staging",
+  "service": {
+    "id": "srv-daatuq7qj5pc73b9c9sg",
+    "name": "studio-810-staging",
+    "publicUrl": "https://staging.wearestudio810.com"
+  },
+  "expectedSha": "797baeedc64db7d32406ca86ae0ff6abffe38367",
+  "deploy": {
+    "status": "live",
+    "servingSha": "797baeedc64db7d32406ca86ae0ff6abffe38367",
+    "finishedAt": "2026-08-31T22:24:07.222464Z"
+  },
+  "health": {
+    "httpStatus": 200,
+    "tlsValid": true,
+    "certificateSubject": "CN=staging.wearestudio810.com",
+    "checkedUrl": "https://staging.wearestudio810.com",
+    "contentMarker": "<title>Studio 810</title>"
+  },
+  "customDomains": [
+    {
+      "name": "staging.wearestudio810.com",
+      "verified": true,
+      "certificateIssued": true
+    }
+  ],
+  "infraDrift": [],
+  "outcome": "live",
+  "promotion": {
+    "prUrl": "https://github.com/ryanphillipthomas/studio-810/pull/7",
+    "commitRange": "5620401..797baee",
+    "merged": false
+  }
+}
