@@ -7,7 +7,7 @@
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
       "scopeHint": "Four pages: Foundation (0:1) holds the variable collections, text styles and the Button sets; Global (36:2), Patterns (36:3) and Provenance (36:4) were added in run 3 to organise whole-site coverage (approved at Checkpoint 1, 2026-08-31). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px; 375px values recorded in each component spec but modelled only where the component is structurally different there). Provenance selectors are recorded in every text style description and in the descriptions of variables created from run 3 onward; the 34 variables from runs 1-2 carry no description — their provenance lives in the PRs that landed them. See findings.",
-      "contains": "studio810 design system foundation: seven variable collections (color, radius, space, type, border, size, opacity), each single-mode 'Light', totalling 81 variables, ten text styles, and 16 component sets.",
+      "contains": "studio810 design system foundation: seven variable collections (color, radius, space, type, border, size, opacity), each single-mode 'Light', totalling 82 variables, ten text styles, and 18 component sets.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -77,7 +77,8 @@
             "studio810/space/section-y-sm",
             "studio810/space/section-y-lg",
             "studio810/space/section-y-hero",
-            "studio810/space/reel-inset"
+            "studio810/space/reel-inset",
+            "studio810/space/gallery-gap"
           ]
         },
         "studio810/type": {
@@ -437,6 +438,30 @@
           ],
           "bindings": "Vertical auto-layout, centred, fixed width 326.41 shared by the image container, name and bio. Photo placeholder (300.35x349.91, narrower than its 326.41 column - object-fit:contain letterboxes rather than object-fit:cover crops, unlike Profile/Person) over a combined name+descriptor H4 ('Oliver - Cat / Entertainer', one line, no <strong> wrap this time) in color/text-brand over a UI/Body bio in color/text-ink. Both gaps 11px = space/grid-gutter. The terracotta-heading/dark-body colour split matches the Stone (surface-4) surface this sits on, per Section/Standard's documented convention.",
           "deviations": "color/text-brand - the FIRST row of the original approved-34 list from Checkpoint 1 - had never been created across any prior component that could have used it, surfacing only on this, the last of the 16. Same recurring build hazard as five prior components."
+        },
+        "Gallery/Grid": {
+          "nodeId": "112:6",
+          "key": "5db765df8ec7c65d9613c733583c4e7981bd311d",
+          "page": "Patterns (36:3)",
+          "variants": "none — one repeating tile, 10 real instances on /gallery",
+          "size": "642.31x643.31",
+          "properties": [
+            "none — a placeholder fill; the page composes 10 real photos into a 2-column grid, not this component"
+          ],
+          "bindings": "Single square tile matching the live .gallery-grid-item exactly (642.3x643.3, object-fit:cover, radius 0). Same pattern as List/AmenityItem: one repeating item, the grid itself (2 columns, space/gallery-gap 54px between tiles) is a page-level composition.",
+          "deviations": "No links, no lightbox - confirmed directly (isLink:false on every tile), matching the finding already on record. Placeholder fill, not real photography, same treatment as every other image slot this run."
+        },
+        "Embed/Calendar": {
+          "nodeId": "112:9",
+          "key": "67f6c58a5b675631e054226979f7af73473bbf03",
+          "page": "Patterns (36:3)",
+          "variants": "none",
+          "size": "776x631",
+          "properties": [
+            "none"
+          ],
+          "bindings": "A labelled placeholder frame at the measured container size (.sqs-block.website-component-block, 776x631 on /availability), fill surface-4. Carries a visible text note naming what it represents and why it stops there, rather than a silent empty box.",
+          "deviations": "Deliberately container-only, per the brief's explicit instruction. The live embed is a cross-origin Google Calendar iframe (778x602) whose internals (contentDocument) are blocked from inspection - confirmed at Checkpoint 0, not re-litigated. No calendar UI, no interactivity, no attempt to approximate Google Calendar's interface."
         }
       },
       "pages": {
@@ -460,7 +485,7 @@
     "lastSync": "2026-08-31T19:04:46Z",
     "syncedBy": "claude-code (Design role), authorized by Ryan"
   },
-  "pendingPublish": "Unpublished as of this commit: EVERY studio810/* variable and text style in the file - the original 34 from runs 1-2 (descriptions backfilled this run, see provenanceBackfill below) plus all created in run 3 (81 total); the Size property and Size=Compact variants on Button/Primary (13:3); and all sixteen component sets built in run 3 (Link/Inline 49:8, Nav/Header 58:81, Nav/Mobile 76:9, Block/ContactInfo 79:25, Footer/Contact 79:26, Section/PageHeader 81:24, Hero/Full 85:4, Gallery/Reel 97:20, Icon/Instagram 98:21, Icon/Cart 98:27, List/AmenityItem 99:6, Plan/Membership 102:17, Profile/Person 104:20, Profile/Pet 106:18). design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values. Publish via: Figma > DS-001 file > Assets panel > Libraries > Publish.",
+  "pendingPublish": "Unpublished as of this commit: EVERY studio810/* variable and text style in the file - the original 34 from runs 1-2 (descriptions backfilled this run) plus all created in run 3 (82 total); the Size property and Size=Compact variants on Button/Primary (13:3); and all sixteen component sets built in run 3 (Link/Inline 49:8, Nav/Header 58:81, Nav/Mobile 76:9, Block/ContactInfo 79:25, Footer/Contact 109:270, Section/PageHeader 81:24, Hero/Full 109:271, Gallery/Reel 109:272, Icon/Instagram 98:21, Icon/Cart 98:27, List/AmenityItem 99:6, Plan/Membership 102:17, Profile/Person 104:20, Profile/Pet 106:18, Gallery/Grid 112:6, Embed/Calendar 112:9). design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values. Publish via: Figma > DS-001 file > Assets panel > Libraries > Publish.",
   "buildHazards": [
     "Figma's clone() does not carry componentPropertyReferences: cloned variants silently lose their TEXT property and must have it reassigned. Hit on Button/Primary Size=Compact.",
     "Setting textDecoration directly on a TEXT node that has a text style applied is silently discarded - the style owns the property. This is why UI/Link exists rather than node-level decoration.",
