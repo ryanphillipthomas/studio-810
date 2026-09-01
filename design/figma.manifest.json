@@ -6,8 +6,8 @@
       "fileKey": "RNiGA3UTB9q80Wl8yOAsFX",
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
-      "scopeHint": "Single Foundation page (0:1). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px); provenance selectors recorded in each variable/style description and in the PR that landed them.",
-      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 34 variables, nine text styles, and two component sets.",
+      "scopeHint": "Four pages: Foundation (0:1) holds the variable collections, text styles and the Button sets; Global (36:2), Patterns (36:3) and Provenance (36:4) were added in run 3 to organise whole-site coverage (approved at Checkpoint 1, 2026-08-31). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px; 375px values recorded in each component spec but modelled only where the component is structurally different there). Provenance selectors are recorded in every text style description and in the descriptions of variables created from run 3 onward; the 34 variables from runs 1-2 carry no description — their provenance lives in the PRs that landed them. See findings.",
+      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 37 variables, nine text styles, and two component sets.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -50,7 +50,9 @@
           ],
           "variables": [
             "studio810/space/control-x",
-            "studio810/space/control-y"
+            "studio810/space/control-y",
+            "studio810/space/control-x-sm",
+            "studio810/space/control-y-sm"
           ]
         },
         "studio810/type": {
@@ -69,7 +71,8 @@
             "studio810/type/size-wordmark",
             "studio810/type/size-body",
             "studio810/type/weight-regular",
-            "studio810/type/weight-bold"
+            "studio810/type/weight-bold",
+            "studio810/type/line-control-sm"
           ]
         },
         "studio810/border": {
@@ -126,20 +129,25 @@
         "Button/Primary": {
           "nodeId": "13:3",
           "key": "8005841b495f653f031aa036a41cb6444bfbe6c2",
-          "variants": "State(Default|Hover|Focused|Disabled)",
+          "variants": "State(Default|Hover|Focused|Disabled) x Size(Default|Compact)",
           "variantNodeIds": {
-            "State=Default": "1:5",
-            "State=Hover": "12:2",
-            "State=Focused": "12:4",
-            "State=Disabled": "12:6"
+            "State=Default, Size=Default": "1:5",
+            "State=Hover, Size=Default": "12:2",
+            "State=Focused, Size=Default": "12:4",
+            "State=Disabled, Size=Default": "12:6",
+            "State=Default, Size=Compact": "40:2",
+            "State=Hover, Size=Compact": "40:4",
+            "State=Focused, Size=Compact": "41:2",
+            "State=Disabled, Size=Compact": "41:5"
           },
-          "size": "160x406",
+          "size": "288.8x406",
           "properties": [
             "Label#13:0 (TEXT)",
-            "State (VARIANT)"
+            "State (VARIANT)",
+            "Size (VARIANT)"
           ],
-          "bindings": "each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-fill; Hover action-fill-hover; Disabled action-fill-disabled). State=Focused adds a 'Focus Ring' rectangle with stroke color (color/border-focus), per-side stroke weights (border/focus-ring) and corner radii (radius/control) bound; the ring's ±6px placement = focus-ring + focus-offset, positional geometry Figma cannot bind to variables.",
-          "deviations": "Size and Shape axes from the focx matrix intentionally omitted: the live site defines exactly one control size and one shape (no --small/--large or pill rules exist in its served CSS). Approved at Checkpoint 1, 2026-08-31."
+          "bindings": "Size=Default (unchanged from run 2): fills, text fill, all four corner radii, all four paddings (space/control-x, space/control-y), fontFamily, fontSize and fontWeight bound to studio810 variables; the label's lineHeight is left AUTO, which resolves to the measured 21px for PT Serif 16px. Size=Compact is identical except that paddings bind to space/control-x-sm and space/control-y-sm and the label's lineHeight binds to type/line-control-sm (27px). Fills by state: Default and Focused use action-fill; Hover uses action-fill-hover at Size=Default and action-fill at Size=Compact; Disabled uses action-fill-disabled. Both Focused variants carry a 'Focus Ring' rectangle with stroke colour, per-side stroke weights (border/focus-ring) and corner radii (radius/control) bound - Size=Default strokes color/border-focus, Size=Compact strokes color/border-focus-inverse. The ring's +/-6px placement equals focus-ring + focus-offset, positional geometry Figma cannot bind to variables. Audited run 3: zero unbound raw values across all 8 variants.",
+          "deviations": "CORRECTION (run 3): the run-2 note claimed the live site defines exactly one control size. That was wrong. button.sqs-add-to-cart-button (the /membership Apply button) is padding 12.8px 19.2px with a 27px label line box, against 24px 35.2px and a 21px line box for .btn. A Size(Default|Compact) axis was added and the four original variant node IDs were preserved by renaming rather than rebuilding. Approved by Ryan at Gate A, 2026-08-31; there were zero instances in the file at the time, so the API change had no blast radius. A Shape axis is still intentionally omitted - radius/control 15px is the only shape the site serves. Size=Compact, State=Hover is deliberately pixel-identical to State=Default: the applicable rule is .sqs-editable-button:hover{opacity:1}, and the opacity:.8 hover belongs to .btn, which this button does not carry. MEASURED, not an oversight. Size=Compact's two derived states were derived for the dark-green #495a58 surface it is the only button to render on: the focus ring strokes border-focus-inverse (white) because border-focus #303636 would be near-invisible there, while the disabled fill keeps action-fill-disabled #ddab97 even though that value is the white-backdrop flatten of action-fill at 80% - over #495a58 the same rule yields #b88a76. Ryan chose one hover/disabled token plus a recorded caveat over a second token (decision 3, Checkpoint 1). Both Focused and Disabled are DERIVED throughout: no :focus-visible and no :disabled rule exists for any of these selectors in the served CSS. Build hazard recorded for future components: Figma's clone() does not carry componentPropertyReferences, so the four Compact labels initially lost Label#13:0 and it was restored explicitly; every build from here asserts it. The component hugs its label (Size=Compact 88.4x52.6); the live Apply button renders 382.64px wide because its wrapper is display:block and the button is max-width:100% - width is container-driven, not a property of the button."
         },
         "Button/Inverse": {
           "nodeId": "17:7",
@@ -159,6 +167,12 @@
           "bindings": "clone of Button/Primary's structure; each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-inverse-fill; Hover action-inverse-fill-hover; Disabled action-inverse-fill-disabled; labels action-inverse-text; Focus Ring stroke color border-focus-inverse). The set container's own fill is bound to color/surface-2 — the bright-theme terracotta backdrop the inverse button lives on — so white variants are visible on canvas.",
           "deviations": "Same as Button/Primary: no Size/Shape axes (single measured size and shape). Hover/Disabled share a value because the live site renders both states as opacity .8; the label keeps action-inverse-text in those states because its color equals the flatten backdrop, making the flatten a mathematical no-op on the text. Approved by Ryan 2026-08-31 (\"add the inverse button too\")."
         }
+      },
+      "pages": {
+        "Foundation": "0:1",
+        "Global": "36:2",
+        "Patterns": "36:3",
+        "Provenance": "36:4"
       }
     }
   },
@@ -166,5 +180,6 @@
     "tool": "figma-mcp",
     "lastSync": "2026-08-31T19:04:46Z",
     "syncedBy": "claude-code (Design role), authorized by Ryan"
-  }
+  },
+  "pendingPublish": "Run 3 built these into the file but a library publish is a Figma UI action with no Plugin API equivalent (figma.publishAsync does not exist; figma.teamLibrary is read-only). Unpublished as of this commit: variables studio810/space/control-x-sm, studio810/space/control-y-sm, studio810/type/line-control-sm; the Size property and the four Size=Compact variants on Button/Primary (13:3). design/tokens/studio810/tokens.json is deliberately NOT synced until that publish lands, so the mirror never carries unpublished values."
 }
