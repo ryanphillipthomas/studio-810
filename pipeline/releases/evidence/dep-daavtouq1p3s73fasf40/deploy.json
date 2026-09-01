@@ -1,0 +1,14 @@
+{
+  "id": "dep-daavtouq1p3s73fasf40",
+  "commit": {
+    "id": "01fbbb5328b209f882e101386de8fe07b2c4247d",
+    "message": "deploy: the dashboard names are intentional — declare them\n\nRyan confirmed the Render display names studio-810 and studio-810-staging\nare deliberate, so deploy.config.json now declares them and the name drift\ngoes green. render.yaml keeps name: wearestudio810 on purpose — it is the\nblueprint identity and the source of the onrender.com slug, and renaming a\nblueprint service risks recreating it (new slug would break the pre-cutover\nproduction URL); the header documents the split.\n\nAlso corrects the stale previews claims the deploy agent caught on its first\nday: sources-of-truth.md and the render.yaml header both said previews were\nenabled when the toggles are Off by choice. Both of that run's findings are\nnow resolved deliberately rather than silently.\n\nCo-Authored-By: claude-flow <ruv@ruv.net>",
+    "createdAt": "2026-08-31T22:23:29Z"
+  },
+  "status": "live",
+  "trigger": "new_commit",
+  "createdAt": "2026-08-31T22:23:31.494639Z",
+  "updatedAt": "2026-08-31T22:23:44.00139Z",
+  "startedAt": "2026-08-31T22:23:31.492633Z",
+  "finishedAt": "2026-08-31T22:23:44.00121Z"
+}

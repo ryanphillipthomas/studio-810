@@ -6,8 +6,8 @@
       "fileKey": "RNiGA3UTB9q80Wl8yOAsFX",
       "url": "https://www.figma.com/design/RNiGA3UTB9q80Wl8yOAsFX",
       "role": "parent",
-      "scopeHint": "Single Foundation page (0:1). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px); provenance selectors recorded in each variable/style description and in the PR that landed them.",
-      "contains": "studio810 design system foundation: five variable collections (color, radius, space, type, border), each single-mode 'Light', totalling 34 variables, nine text styles, and two component sets.",
+      "scopeHint": "Four pages: Foundation (0:1) holds the variable collections, text styles and the Button sets; Global (36:2), Patterns (36:3) and Provenance (36:4) were added in run 3 to organise whole-site coverage (approved at Checkpoint 1, 2026-08-31). All content is studio810.* scope. Brand values measured from the live wearestudio810.com site via getComputedStyle (desktop values captured at a 1440px viewport, stable >= 1400px; 375px values recorded in each component spec but modelled only where the component is structurally different there). Provenance selectors are recorded in every text style description and in the descriptions of variables created from run 3 onward; the 34 variables from runs 1-2 carry no description — their provenance lives in the PRs that landed them. See findings.",
+      "contains": "studio810 design system foundation: seven variable collections (color, radius, space, type, border, size, opacity), each single-mode 'Light', totalling 82 variables, ten text styles, and 18 component sets.",
       "variableCollections": {
         "studio810/color": {
           "id": "VariableCollectionId:1:2",
@@ -31,7 +31,9 @@
             "studio810/color/action-inverse-text",
             "studio810/color/action-inverse-fill-hover",
             "studio810/color/action-inverse-fill-disabled",
-            "studio810/color/border-focus-inverse"
+            "studio810/color/border-focus-inverse",
+            "studio810/color/border-focus-brand",
+            "studio810/color/text-brand"
           ]
         },
         "studio810/radius": {
@@ -50,7 +52,33 @@
           ],
           "variables": [
             "studio810/space/control-x",
-            "studio810/space/control-y"
+            "studio810/space/control-y",
+            "studio810/space/control-x-sm",
+            "studio810/space/control-y-sm",
+            "studio810/space/header-y",
+            "studio810/space/section-x",
+            "studio810/space/nav-item-x",
+            "studio810/space/nav-item-y",
+            "studio810/space/folder-x",
+            "studio810/space/folder-y",
+            "studio810/space/cart-badge-gap",
+            "studio810/space/header-gap",
+            "studio810/space/menu-header-pad",
+            "studio810/space/menu-item-y",
+            "studio810/space/menu-item-x",
+            "studio810/space/menu-item-margin",
+            "studio810/space/menu-controls-y",
+            "studio810/space/header-y-mobile",
+            "studio810/space/stack-sm",
+            "studio810/space/stack-md",
+            "studio810/space/section-y",
+            "studio810/space/grid-edge",
+            "studio810/space/grid-gutter",
+            "studio810/space/section-y-sm",
+            "studio810/space/section-y-lg",
+            "studio810/space/section-y-hero",
+            "studio810/space/reel-inset",
+            "studio810/space/gallery-gap"
           ]
         },
         "studio810/type": {
@@ -69,7 +97,16 @@
             "studio810/type/size-wordmark",
             "studio810/type/size-body",
             "studio810/type/weight-regular",
-            "studio810/type/weight-bold"
+            "studio810/type/weight-bold",
+            "studio810/type/line-control-sm",
+            "studio810/type/line-nav-folder",
+            "studio810/type/size-nav-mobile",
+            "studio810/type/size-nav-mobile-back",
+            "studio810/type/size-wordmark-mobile",
+            "studio810/type/size-lead",
+            "studio810/type/size-plan-title",
+            "studio810/type/size-plan-price",
+            "studio810/type/size-small"
           ]
         },
         "studio810/border": {
@@ -80,7 +117,34 @@
           "variables": [
             "studio810/border/hairline",
             "studio810/border/focus-ring",
-            "studio810/border/focus-offset"
+            "studio810/border/focus-offset",
+            "studio810/border/underline-offset"
+          ]
+        },
+        "studio810/size": {
+          "id": "VariableCollectionId:52:2",
+          "modes": [
+            "Light"
+          ],
+          "variables": [
+            "studio810/size/header-max-width",
+            "studio810/size/folder-min-width",
+            "studio810/size/icon-social",
+            "studio810/size/icon-cart",
+            "studio810/size/burger",
+            "studio810/size/burger-bar",
+            "studio810/size/burger-btn",
+            "studio810/size/reel-control"
+          ]
+        },
+        "studio810/opacity": {
+          "id": "(created at runtime — Figma does not expose a stable ID string for a collection created this run; see the file itself)",
+          "modes": [
+            "Light"
+          ],
+          "variables": [
+            "studio810/opacity/nav-mobile-back",
+            "studio810/opacity/nav-mobile-hover"
           ]
         }
       },
@@ -120,26 +184,35 @@
         "UI/Nav": {
           "id": "S:20ef7ef7eb4693a860b06f6ce57620902148b51c,",
           "key": "20ef7ef7eb4693a860b06f6ce57620902148b51c"
+        },
+        "UI/Link": {
+          "id": "S:407a83b90d87218ddefb17116dd59c035dbfd560,",
+          "key": "407a83b90d87218ddefb17116dd59c035dbfd560"
         }
       },
       "componentSets": {
         "Button/Primary": {
           "nodeId": "13:3",
           "key": "8005841b495f653f031aa036a41cb6444bfbe6c2",
-          "variants": "State(Default|Hover|Focused|Disabled)",
+          "variants": "State(Default|Hover|Focused|Disabled) x Size(Default|Compact)",
           "variantNodeIds": {
-            "State=Default": "1:5",
-            "State=Hover": "12:2",
-            "State=Focused": "12:4",
-            "State=Disabled": "12:6"
+            "State=Default, Size=Default": "1:5",
+            "State=Hover, Size=Default": "12:2",
+            "State=Focused, Size=Default": "12:4",
+            "State=Disabled, Size=Default": "12:6",
+            "State=Default, Size=Compact": "40:2",
+            "State=Hover, Size=Compact": "40:4",
+            "State=Focused, Size=Compact": "41:2",
+            "State=Disabled, Size=Compact": "41:5"
           },
-          "size": "160x406",
+          "size": "288.8x406",
           "properties": [
             "Label#13:0 (TEXT)",
-            "State (VARIANT)"
+            "State (VARIANT)",
+            "Size (VARIANT)"
           ],
-          "bindings": "each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-fill; Hover action-fill-hover; Disabled action-fill-disabled). State=Focused adds a 'Focus Ring' rectangle with stroke color (color/border-focus), per-side stroke weights (border/focus-ring) and corner radii (radius/control) bound; the ring's ±6px placement = focus-ring + focus-offset, positional geometry Figma cannot bind to variables.",
-          "deviations": "Size and Shape axes from the focx matrix intentionally omitted: the live site defines exactly one control size and one shape (no --small/--large or pill rules exist in its served CSS). Approved at Checkpoint 1, 2026-08-31."
+          "bindings": "Size=Default (unchanged from run 2): fills, text fill, all four corner radii, all four paddings (space/control-x, space/control-y), fontFamily, fontSize and fontWeight bound to studio810 variables; the label's lineHeight is left AUTO, which resolves to the measured 21px for PT Serif 16px. Size=Compact is identical except that paddings bind to space/control-x-sm and space/control-y-sm and the label's lineHeight binds to type/line-control-sm (27px). Fills by state: Default and Focused use action-fill; Hover uses action-fill-hover at Size=Default and action-fill at Size=Compact; Disabled uses action-fill-disabled. Both Focused variants carry a 'Focus Ring' rectangle with stroke colour, per-side stroke weights (border/focus-ring) and corner radii (radius/control) bound - Size=Default strokes color/border-focus, Size=Compact strokes color/border-focus-brand. The ring's +/-6px placement equals focus-ring + focus-offset, positional geometry Figma cannot bind to variables. Audited run 3: zero unbound raw values across all 8 variants.",
+          "deviations": "CORRECTION (run 3): the run-2 note claimed the live site defines exactly one control size. That was wrong. button.sqs-add-to-cart-button (the /membership Apply button) is padding 12.8px 19.2px with a 27px label line box, against 24px 35.2px and a 21px line box for .btn. A Size(Default|Compact) axis was added and the four original variant node IDs were preserved by renaming rather than rebuilding. Approved by Ryan at Gate A, 2026-08-31; there were zero instances in the file at the time, so the API change had no blast radius. A Shape axis is still intentionally omitted - radius/control 15px is the only shape the site serves. Size=Compact, State=Hover is deliberately pixel-identical to State=Default: the applicable rule is .sqs-editable-button:hover{opacity:1}, and the opacity:.8 hover belongs to .btn, which this button does not carry. MEASURED, not an oversight. Size=Compact's two derived states were derived for the dark-green #495a58 surface it is the only button to render on: the focus ring strokes border-focus-inverse (white) because border-focus #303636 would be near-invisible there, while the disabled fill keeps action-fill-disabled #ddab97 even though that value is the white-backdrop flatten of action-fill at 80% - over #495a58 the same rule yields #b88a76. Ryan chose one hover/disabled token plus a recorded caveat over a second token (decision 3, Checkpoint 1). CORRECTION (same run): an earlier version of this note claimed Focused was DERIVED because no :focus-visible rule existed. That was wrong - the reader had missed three universal rules in the served CSS: ':focus{outline-offset:4px}', ':focus,a:focus{outline-width:2px;outline-style:solid}' and ':focus,a:focus{outline-color:var(--navigationLinkColor)}', gated by ':focus:not(:focus-visible){outline:none}'. Focused is therefore MEASURED, and border/focus-ring 2px and border/focus-offset 4px are measured values, not inventions - the ring's -6px inset (2+4) is correct. What is theme-dependent is the ring COLOUR, since --navigationLinkColor resolves per section theme: #303636 on white and light-bold, #ffffff on bright and the site default, #d4967d on dark-bold. Size=Compact strokes border-focus-brand #d4967d because /membership section 2, the only place the compact button appears, is dark-bold. Size=Default keeps border-focus #303636, correct for the white and light-bold sections where most primary buttons sit but not for the dark sections - a single-variant component cannot carry a theme-dependent colour, recorded as a known limitation pending the Theme-axis decision that belongs with the section components. Disabled remains genuinely DERIVED: no :disabled or sold-out rule exists for any of these selectors. Build hazard recorded for future components: Figma's clone() does not carry componentPropertyReferences, so the four Compact labels initially lost Label#13:0 and it was restored explicitly; every build from here asserts it. The component hugs its label (Size=Compact 88.4x52.6); the live Apply button renders 382.64px wide because its wrapper is display:block and the button is max-width:100% - width is container-driven, not a property of the button."
         },
         "Button/Inverse": {
           "nodeId": "17:7",
@@ -158,13 +231,266 @@
           ],
           "bindings": "clone of Button/Primary's structure; each variant: fills, text fill, all four corner radii, all four paddings, fontFamily, fontSize, fontWeight bound to studio810 variables (Default/Focused fill action-inverse-fill; Hover action-inverse-fill-hover; Disabled action-inverse-fill-disabled; labels action-inverse-text; Focus Ring stroke color border-focus-inverse). The set container's own fill is bound to color/surface-2 — the bright-theme terracotta backdrop the inverse button lives on — so white variants are visible on canvas.",
           "deviations": "Same as Button/Primary: no Size/Shape axes (single measured size and shape). Hover/Disabled share a value because the live site renders both states as opacity .8; the label keeps action-inverse-text in those states because its color equals the flatten backdrop, making the flatten a mathematical no-op on the text. Approved by Ryan 2026-08-31 (\"add the inverse button too\")."
+        },
+        "Link/Inline": {
+          "nodeId": "49:8",
+          "key": "2f95842cbd7ea7fefdd3666218bc8be170a500c9",
+          "page": "Global (36:2)",
+          "variants": "Theme(Default|Brand)",
+          "variantNodeIds": {
+            "Theme=Default": "49:4",
+            "Theme=Brand": "49:7"
+          },
+          "size": "232x112",
+          "properties": [
+            "Label#49:0 (TEXT)",
+            "Theme (VARIANT)"
+          ],
+          "bindings": "Each variant is a transparent hug/hug auto-layout frame holding one TEXT node carrying the Label#49:0 property. Type comes from the UI/Link text style, whose fontSize, fontFamily and fontWeight bind to studio810/type/size-body, family-body and weight-regular. Link colour is set on the node, not the style, because it is the one property that varies by theme: Theme=Default binds color/action-fill (#d4967d), Theme=Brand binds color/action-inverse-fill (#ffffff). The set container's fill binds to color/surface-1 so both variants are legible on canvas - a review affordance, not a property of the component; the variant frames themselves are transparent, matching the measured background-color rgba(0,0,0,0).",
+          "deviations": "Underline thickness (1px) and offset (0.2em, stored as 20% of font size) live on the UI/Link text style as raw values because Figma's bindable text fields do not include textDecoration* - the same class of limitation as the focus ring's positional geometry. studio810/border/underline-offset (=20) documents the value for the code mirror rather than driving Figma, and is a percent among px-valued siblings in that collection; studio810/type would be the more coherent home, left where Checkpoint 1 put it. Build hazard recorded: setting textDecoration directly on a TEXT node that has a text style applied is silently discarded - the style owns the property - which is why UI/Link exists rather than node-level decoration. No State axis: inline links have no hover (the p a:hover rule is scoped to .tweak-global-animations-animation-type-flex and the body carries -type-fade), and their focus outline comes from the global :focus rule rather than from this component, so it is recorded in the style description rather than modelled as a variant. Theme(Default|Brand) covers the two measured link colours; Default is correct on the white, light-bold, dark-bold and site-default themes, Brand only on bright."
+        },
+        "Nav/Header": {
+          "nodeId": "58:81",
+          "key": "cdfec60aab4eed809f668818cba7d550362883c4",
+          "page": "Global (36:2)",
+          "variants": "Theme(Dark|Brand|Light)",
+          "variantNodeIds": {
+            "Theme=Dark": "58:3",
+            "Theme=Brand": "58:4",
+            "Theme=Light": "58:42"
+          },
+          "size": "1440x139.28 per variant",
+          "properties": [
+            "Show Dropdown#58:0 (BOOLEAN)",
+            "Theme (VARIANT)"
+          ],
+          "bindings": "Bar: padding bound to space/header-y and space/section-x; fill bound to the section surface the transparent header overlays (surface-1 Dark, surface-2 Brand, surface-3 Light). Three fixed columns at the measured 25/50/25 split of the content box (338.4/676.8/338.4 at a 1440 canvas). Centre stacks the Brand/Wordmark text style over a nav row with space/header-gap; each of the seven nav items is a frame padded by space/nav-item-x and space/nav-item-y around a UI/Nav label. Right column holds the cart (glyph built from the site's own stroke path data, 25px, strokes bound; count badge in UI/Nav) spaced by space/cart-badge-gap, then a real nested INSTANCE of the published Button/Primary (Dark, Light) or Button/Inverse (Brand) set - not a copy. Folder dropdown is absolutely positioned inside the Settings item, fill bound to the theme surface, padding to space/folder-x and space/folder-y, width fixed 232, minWidth bound to size/folder-min-width, items bound directly to type/family-body, size-body, weight-regular and type/line-nav-folder. Foreground colour across wordmark, nav, folder, both icons and the badge is text-inverse (Dark, Brand) or text-ink (Light). Audited run 3: 15 bound fills and 3 bound strokes per variant, every padding bound, zero raw values.",
+          "deviations": "The variant fill represents the SECTION the header overlays, not a header background - the live header is position:absolute and transparent and takes its colour from the first section, whose data-section-theme also drives the header class. That is why Theme has exactly three values: bright, dark and white are the three top-section themes in use, and each produces a distinct foreground plus a distinct CTA component. Dropdown width 232 is derived from two measured values: the live min-width:200px is content-box, so the border box is 200 + 2 x space/folder-x. Dropdown placement (x -16, y 27.2) is positional geometry Figma cannot bind, same class as the focus ring. The Instagram glyph replicates the live transform exactly (symbol viewBox 0 0 64 64 scaled 110/64, windowed at viewBox 23 23 64 64) rather than a hand-chosen crop; createNodeFromSvg adds an opaque wrapper fill which was cleared to match the live SVG. Cart badge uses UI/Nav 16/24 where the live badge computes 16/25 - a 1px line-box difference not worth a token. No hover or focus modelled: desktop nav links measurably have neither (the ::after underline rule is scoped to .tweak-global-animations-animation-type-flex and the body carries -type-fade), and focus comes from the global :focus rule rather than from this component. Show Dropdown is a BOOLEAN property rather than six variants. Geometry residue against live is font-metric only: bar 139.28 vs 138.54, nav row 636.52 vs 633.48, cart 38.67 vs 38.195. RETROFITTED after initial build: the Instagram and cart glyphs were originally built as independent createNodeFromSvg vectors inside this component (duplicated, not shared). Following a stock-take with Ryan, both were swapped for instances of the new shared Icon/Instagram (98:21) and Icon/Cart (98:27) components, with each instance's nested vector fill/stroke rebound to the correct theme colour per variant. Geometry and audit results unchanged by the swap."
+        },
+        "Nav/Mobile": {
+          "nodeId": "76:9",
+          "key": "70d14c59c4d01660fbdb9234eef2dc6afb3b90f8",
+          "page": "Global (36:2)",
+          "variants": "State(Closed|Open)",
+          "variantNodeIds": {
+            "State=Closed": "variant child of 76:9",
+            "State=Open": "variant child of 76:9"
+          },
+          "size": "Closed 375x82, Open 375x812",
+          "properties": [
+            "Show Folder#76:0 (BOOLEAN)",
+            "State (VARIANT)"
+          ],
+          "bindings": "Closed is the collapsed bar: a real 3-visible-column flex row (title-wrapper flex-grow with a left-aligned wordmark; a fixed cart column with the site's own cart glyph and count; a fixed burger column holding the 47x37 hit target), padding bound to the new space/header-y-mobile on all sides. Open reproduces the SAME bar stacked over the full overlay panel, because the live collapsed bar stays on screen (z-index 10) over the opened overlay (z-index 1) rather than being replaced by it - confirmed by toggling header--menu-open live and reading computed z-index. The bar's burger bars swap from three static bars to the X geometry (rotate +/-135deg, translateX 3.5px, width 28px) - raw values, since Figma variables do not reach transform properties. Below the bar, Overlay holds a 7-item root nav list and a hidden folder list (back control + Availability/Book/Wifi Success), then an Actions row with a real Icon/Instagram and a nested INSTANCE of the published Button/Inverse set for the CTA - not Button/Primary, since the CTA renders white-on-terracotta against the overlay's own terracotta fill. The CTA label's font size is locally overridden to 19.2px (Button/Inverse's own type stays bound to type/size-body 16px for every other instance); this is the one deliberately unbound property in the whole set, recorded per Checkpoint-4's 'override locally' approval rather than adding a Breakpoint axis to Button/Inverse for one screen.",
+          "deviations": "Show Folder cannot invert a second node in Figma's Plugin API, so Nav List — Folder is built as an absolutely-positioned, full-bleed overlay (375x380.63, matching Nav List — Root's own footprint exactly) with the same surface-2 fill, so toggling the boolean occludes root rather than stacking both simultaneously. This is a structural fix, not a disclosed bug. Gate A originally assumed the mobile wordmark was centred; measuring the live flex children (title-nav-wrapper flex:1 0, fixed 75px cart, fixed 50px burger, summing to exactly 375) showed it is left-aligned, and the build was corrected before Gate B. One token was added mid-build beyond the seven approved at Gate A: space/header-y-mobile (22.5px), the bar's own padding, found only once the real 3-column layout was understood. No hover or focus modelled on the burger: it is a real <button> with no dedicated rule, inheriting the same universal :focus outline as every other control. The current-page nav item has no visible state, verified directly (colour and weight identical to every other item). RETROFITTED after initial build: the Instagram and cart glyphs were originally built as independent createNodeFromSvg vectors inside this component (duplicated, not shared). Following a stock-take with Ryan, both were swapped for instances of the new shared Icon/Instagram (98:21) and Icon/Cart (98:27) components, with each instance's nested vector fill/stroke rebound to the correct theme colour per variant. Geometry and audit results unchanged by the swap."
+        },
+        "Block/ContactInfo": {
+          "nodeId": "79:25",
+          "key": "454fe6d4afefc3ea59183ebe345ff2f58565a987",
+          "page": "Global (36:2)",
+          "variants": "Content(Text|Links)",
+          "variantNodeIds": {
+            "Content=Text": "79:15",
+            "Content=Links": "79:24"
+          },
+          "size": "280 wide, hugs height",
+          "properties": [
+            "Label#79:0 (TEXT)",
+            "Value#79:3 (TEXT)",
+            "Content (VARIANT)"
+          ],
+          "bindings": "A vertical auto-layout: Heading/H4 Label over a Body group holding a UI/Body Value text node, spaced by space/stack-md (label-to-body) and space/stack-sm (within body). Content=Links additionally nests two Link/Inline (Theme=Brand) instances below Value for mailto/tel. Reused verbatim across /contact (three Content=Text atoms: address, phone, email - Phone and Email wrapped in <strong> in the live markup, which is incidental rich-text double-bolding, not a distinct style) and Footer/Contact (one Content=Links atom for the studio address, one Content=Text atom for Hours).",
+          "deviations": "Discovered mid-build, ahead of Footer/Contact: the reusable unit across the site is this Label+Value atom, not a page-specific block, because /contact's single content block is three repeated h4+p pairs and the footer is two columns of the same pair - identical structure, different composition. Reordered ahead of Footer/Contact from the Checkpoint-1 sequence (approved). Content=Links exists because the footer's first value contains two real anchor tags, and a Figma TEXT property cannot hold a nested component."
+        },
+        "Footer/Contact": {
+          "nodeId": "109:270",
+          "key": "cf1e525c1383df9249c101f44a544ee8088e2012",
+          "page": "Global (36:2)",
+          "variants": "none — identical on all 8 pages",
+          "size": "1425x297 at 1440px canvas",
+          "properties": [
+            "none — composes two Block/ContactInfo instances directly"
+          ],
+          "bindings": "Section shell: fill surface-2, padding space/section-y (top/bottom) and space/grid-edge (left/right), min-height 297 fixed. Holds a Block/ContactInfo Content=Links instance (664px, studio address + mailto/tel) and a Content=Text instance (158px, Hours), laid out space-between. Column widths (664, 158) are measured pixel values from the live 26-track fluid-engine grid, not independently tokenised - the grid's own edge and gutter are (grid-edge, grid-gutter) but individual track spans are not, matching how column widths are handled elsewhere in this file.",
+          "deviations": "Not itself published as a standalone component set with variants - it is the specific composition of Block/ContactInfo used site-wide, recorded here for completeness of the manifest's component inventory even though its 'component set' framing is looser than the others (no variant axis, since the footer never changes). CORRECTED at close-out: this was originally built as a plain FRAME, not a real Figma COMPONENT node - it audited clean and looked identical, but a frame is not publishable to a library. Converted via createComponentFromNode; node ID changed accordingly (old ID retained here for history).",
+          "oldNodeId": "79:26"
+        },
+        "Section/PageHeader": {
+          "nodeId": "81:24",
+          "key": "16d0187f3b2efb846ce6492105613f5f3b6d98d7",
+          "page": "Patterns (36:3)",
+          "variants": "Layout(SplitImageLeft|SplitImageRight|Stacked) x Theme(Dark|Light) — 3 real combinations of a possible 6",
+          "variantNodeIds": {
+            "Layout=SplitImageLeft, Theme=Dark": "variant child of 81:24 (Amenities)",
+            "Layout=SplitImageRight, Theme=Light": "variant child of 81:24 (Membership)",
+            "Layout=Stacked, Theme=Dark": "variant child of 81:24 (Availability/Book/Residents)"
+          },
+          "size": "1425 wide at 1440px canvas; heights vary by content",
+          "properties": [
+            "Show CTA#81:0 (BOOLEAN)",
+            "Layout (VARIANT)",
+            "Theme (VARIANT)"
+          ],
+          "bindings": "SplitImageLeft/Dark and SplitImageRight/Light are horizontal auto-layout: an image placeholder (semi-transparent fill sized to the real measured image box - 614x671 and 671x664) beside a text column (H2 title over a lead paragraph at type/size-lead 22.72px, PT Serif). Stacked/Dark is centered title + lead + an optional real Button/Primary instance, gated by Show CTA. All three bind padding to space/section-y-sm (14.4, the page-header content-wrapper padding) and space/grid-edge (32.1953, the fluid-engine edge). Fill is surface-1 (Dark) or surface-3 (Light).",
+          "deviations": "/contact was dropped from this component's page list: its 'header' is literally the first Block/ContactInfo atom (H4 'Contact' + address), already built, and modelling a fourth shape for one page would have meant inventing a shape nothing on the live site has. Split is genuinely mirrored, not one layout reused - Amenities (image left, dark) and Membership (image right, light) are opposite structures, confirmed by reading live DOM order and computed positions (the seed's 'full-width interior hero image' claim for Amenities was itself wrong; neither Split page has a full-width image). Only 3 of the 6 possible Layout x Theme combinations exist as variants, matching what the live site actually uses - Brand does not appear on any page-header instance and is not modelled. Title-to-lead gaps are NOT tokenised: measured 19.86px (Amenities), 100.06px (Membership), 28.71px/39.36px (Availability/Residents) for what looks like the same relationship - these are fluid-engine grid-row artifacts, not a design value, so each variant uses its own measured local gap, consistent with how column widths are handled elsewhere in this file. Residents' internal inconsistency is preserved as measured: its H2 is text-align:center but its lead paragraph is text-align:start. Image placeholders are semi-transparent fills sized to the real measured image box, not embedded photos. Show CTA hides both the CTA instance and its gap spacer together (the same boolean-occlusion pattern as Nav/Header's dropdown and Nav/Mobile's folder), so height hugs correctly in both states. Build hazard hit again: type/size-lead and space/section-y-sm were both approved at Checkpoint 1 and never created - the third time this exact miss has happened - and a first build attempt failed atomically on the missing token, which also rolled back an earlier successful token creation in the same script; both were created together on retry."
+        },
+        "Hero/Full": {
+          "nodeId": "109:271",
+          "key": "d213649b54ef495fb6017bd6fb1d5167417de890",
+          "page": "Patterns (36:3)",
+          "variants": "none — appears once, Home only, never changes",
+          "size": "1425x900 at 1440px canvas",
+          "properties": [
+            "none"
+          ],
+          "bindings": "Vertical auto-layout, fill surface-2, padding space/section-y-hero (top) and space/grid-edge (left/right). Holds the Brand/Hero/Desktop eyebrow ('STUDIO 810', 232px, published run 1/2) over the Heading/H2 headline ('Make it yours.', 46.24px, published). First component built this run that needed zero new tokens and zero new text styles - pure assembly of already-published assets.",
+          "deviations": "CORRECTION: the site inventory and Checkpoint-1 checklist both claimed a video background. There is no video. The background is data-controller=\"BackgroundContours\", Squarespace's canvas/WebGL procedural gradient effect - confirmed by zero video network requests and a bare <canvas> with no video/image feeding it. Modelled as the surface-2 base fill only; the animated effect itself has no static asset to place in Figma, the same class of limitation as the Google Calendar iframe. The pause button is not modelled - already declared out of scope at Checkpoint 1 as Squarespace system chrome. The visible ~265px gap between eyebrow and headline live is NOT a margin - both elements measure margin:0 in the live CSS; the gap is pure line-height overshoot from the 232px display face. Figma mirrors the true margin:0 relationship (itemSpacing 0) rather than reproducing a rendering-engine artifact. Build hazard: space/section-y-hero was the fifth token this run approved at Checkpoint 1 but never actually created before being needed - same recurring miss as Nav/Header, Nav/Mobile and Section/PageHeader (twice). Testing-environment note, not a design finding: in this session's automated browser, the eyebrow's sqsrte-scaled-text fit-to-width script did not visibly run at 1440px (flat 16px, no transform) even after dispatching resize/scroll events; Ryan confirmed on a real device it does scale, so the published Brand/Hero/Desktop value (232px) was trusted over the broken automated measurement. Flagged so a future run does not trust this specific pattern from automation alone. CORRECTED at close-out: this was originally built as a plain FRAME, not a real Figma COMPONENT node - it audited clean and looked identical, but a frame is not publishable to a library. Converted via createComponentFromNode; node ID changed accordingly (old ID retained here for history).",
+          "oldNodeId": "85:4"
+        },
+        "Gallery/Reel": {
+          "nodeId": "109:272",
+          "key": "3a8e726800bb41d9d2d86758e42bbde4f8be5bf2",
+          "page": "Patterns (36:3)",
+          "variants": "none — appears once, Home only",
+          "size": "1425x720 at 1440px canvas",
+          "properties": [
+            "none"
+          ],
+          "bindings": "Plain frame (not auto-layout - children positioned by x/y), fill surface-3. One slide-image placeholder, 1175x661, inset space/reel-inset (125px) each side. Two control buttons, 44x44 bound to size/reel-control, 8px padding, positioned at the measured relX:25/79, relY:676 (left-aligned, flush to the section's bottom edge, NOT centred under the image), 10px gap between them. Each holds a real chevron built from the site's own SVG path data (viewBox 0 0 60 30, paths 'M15.9,23.7L7.1,15l8.7-8.7' and 'M52.9,15H8.5', stroke-only, no fill) - Next is Previous mirrored via scale(-1,1), not redrawn.",
+          "deviations": "space/reel-inset (125px) is a new token, not in the approved 36 - found only by measuring this component: (1425 section width - 1175 image width) / 2. size/reel-control (44px) was approved at Checkpoint 1 and created here on first use, same recurring miss as five prior components. Live CSS uses object-fit:fill on the slide image (stretches to the box, no crop) - unlike every other image on the site, which crops with object-fit:cover. Recorded as a live-site inconsistency, not reproduced (the placeholder fill has no aspect ratio to distort). Slide image is a placeholder, not real photography, matching every other image slot this run. CORRECTED at close-out: this was originally built as a plain FRAME, not a real Figma COMPONENT node - it audited clean and looked identical, but a frame is not publishable to a library. Converted via createComponentFromNode; node ID changed accordingly (old ID retained here for history).",
+          "oldNodeId": "97:20"
+        },
+        "Icon/Instagram": {
+          "nodeId": "98:21",
+          "key": "7000681d5f487aef77b3e9833d22df8bdec1e855",
+          "page": "Global (36:2)",
+          "variants": "none",
+          "size": "20x20",
+          "properties": [
+            "none"
+          ],
+          "bindings": "Single vector built from the site's own symbol path data (id=instagram-unauth-icon, viewBox 0 0 64 64), replicating the live transform exactly: the symbol is scaled 110/64 and windowed at viewBox 23 23 64 64 so the glyph fills its 20px box, matching what wearestudio810.com actually renders rather than a hand-chosen crop. Fill defaults to text-inverse; every consumer (Nav/Header x3 themes, Nav/Mobile) overrides the nested vector's fill binding to its own theme colour on the instance, which stays a real variable binding, not a raw override.",
+          "deviations": "Extracted after Nav/Header and Nav/Mobile were already built and approved with independent copies of this same path data. Consolidated on Ryan's decision during a mid-run stock-take rather than at first build, so both consumers were retrofitted to nest instances of this component instead."
+        },
+        "Icon/Cart": {
+          "nodeId": "98:27",
+          "key": "35d9b319a500185740a4d5b894cd5662cbb9bb49",
+          "page": "Global (36:2)",
+          "variants": "none",
+          "size": "25x25",
+          "properties": [
+            "none"
+          ],
+          "bindings": "Single vector group (two circles + one path) built from the site's own SVG path data (viewBox 0 0 31 24), stroke-only, 1px stroke width, no fill - matches .header-actions--right svg.icon--cart exactly. Stroke defaults to text-inverse; every consumer overrides the nested strokes to its own theme colour on the instance.",
+          "deviations": "Same retrofit history as Icon/Instagram - extracted after Nav/Header and Nav/Mobile were built independently, consolidated on Ryan's decision during a mid-run stock-take."
+        },
+        "List/AmenityItem": {
+          "nodeId": "99:6",
+          "key": "c7a6a333421c5339e6a57a958ab7bcdc45df725d",
+          "page": "Patterns (36:3)",
+          "variants": "none — one repeating item, 16 real instances on /amenities, always the same theme",
+          "size": "304.8 wide, hug height",
+          "properties": [
+            "Label#99:0 (TEXT)",
+            "Body#99:1 (TEXT)"
+          ],
+          "bindings": "Vertical auto-layout, fixed width 304.8, hug height (verified growing 111->135 when swapped to longer body copy, matching the two heights observed live - 180.21/218.45 - which are content-driven, not a fixed value). Heading/H4 label over a UI/Body value, both centered, spaced by space/stack-md (label-to-body) and space/stack-sm within. Fill surface-1, text text-inverse - the /amenities grid section is Dark theme.",
+          "deviations": "None. Cleanest build this run: every property resolved to an already-published or already-created token, zero new tokens needed. Live markup wraps each H4 label in <strong> (cosmetic double-bold from the rich-text editor, same incidental pattern already recorded on Block/ContactInfo's Phone/Email atoms) - not modelled as a distinct style, Heading/H4 already covers it."
+        },
+        "Plan/Membership": {
+          "nodeId": "102:17",
+          "key": "6cef0843d5fcc4405e1305d06b9f9e57714a50bb",
+          "page": "Patterns (36:3)",
+          "variants": "none — three real plans (Space $250, Photography $350, Photography Plus $500) differ only in content",
+          "size": "382.64 wide, hug height",
+          "properties": [
+            "Title#102:0 (TEXT)",
+            "Price#102:1 (TEXT)",
+            "Feature 1#102:2 (TEXT)",
+            "Feature 2#102:3 (TEXT)"
+          ],
+          "bindings": "Vertical auto-layout, transparent fill (matches the live .product-block, borderless/bg-less on its dark-bold section). Title (type/size-plan-title 21.04, no underline) over Price (type/size-plan-price 17.68) over a fixed 2-row bulleted Feature List (4x4 ellipse bullet + UI/Body text, 40px left inset matching the live <ul> padding-left, space/stack-sm above/below) over a real nested Button/Primary, State=Default, Size=Compact instance stretched to fill width, matching the live 382.64px full-width Apply button exactly.",
+          "deviations": "Feature list is fixed at 2 rows, not a freely-editable list - Figma TEXT properties are flat strings and cannot carry live <ul><li> disc markers. Title-to-price gap (4.2px) is not tokenised - a title line-height artifact, not a design value, same reasoning already applied to Section/PageHeader's title-lead gaps. Build hazard: re-querying feature-row text nodes by name AFTER wrapping the card in createComponentFromNode failed (structural re-parenting changes what a name-based query finds); fixed by capturing live node references during creation instead of re-querying the tree afterward. Two type tokens (size-plan-title, size-plan-price) were approved at Checkpoint 1 and created here on first use, same recurring pattern as prior components."
+        },
+        "Profile/Person": {
+          "nodeId": "104:20",
+          "key": "b0c8830188064b2dbb1e0654986e9378536f9215",
+          "page": "Patterns (36:3)",
+          "variants": "none — two real instances (Jaqi, Ryan) on /residents, content-only difference",
+          "size": "495.11 wide, hug height",
+          "properties": [
+            "Name#104:0 (TEXT)",
+            "Role#104:1 (TEXT)",
+            "Bio#104:2 (TEXT)"
+          ],
+          "bindings": "Vertical auto-layout, transparent fill. Photo placeholder (495.11x630.63) over Name (Heading/H4, fixed width 326.41 - narrower than everything else in the column) over Role (type/size-small 14.272/21.408, wrapped in <strong> in the live markup - cosmetic, same incidental pattern as Block/ContactInfo/List/AmenityItem) over Bio (UI/Body). All left-aligned, single stacked column, not side-by-side with the photo. Gaps: photo-to-name 51.1px (explicit spacer, no matching token), name-to-role and role-to-bio both 11px = space/grid-gutter (explicit spacer frames, since Figma auto-layout only supports one uniform itemSpacing per frame and these three gaps are not uniform).",
+          "deviations": "Build hazard: first attempt left in debug cruft from a mid-write refactor - an accidental self-assignment (name.setBoundVariable = name.setBoundVariable) that threw read-only property immediately, caught before anything was created. Rewrote cleanly on retry."
+        },
+        "Profile/Pet": {
+          "nodeId": "106:18",
+          "key": "888ea30788ef46f6449214795a135426952a3d8c",
+          "page": "Patterns (36:3)",
+          "variants": "none — two real instances (Oliver, Stewart) on /residents, content-only difference",
+          "size": "326.41 wide, hug height",
+          "properties": [
+            "Name#106:2 (TEXT)",
+            "Bio#106:3 (TEXT)"
+          ],
+          "bindings": "Vertical auto-layout, centred, fixed width 326.41 shared by the image container, name and bio. Photo placeholder (300.35x349.91, narrower than its 326.41 column - object-fit:contain letterboxes rather than object-fit:cover crops, unlike Profile/Person) over a combined name+descriptor H4 ('Oliver - Cat / Entertainer', one line, no <strong> wrap this time) in color/text-brand over a UI/Body bio in color/text-ink. Both gaps 11px = space/grid-gutter. The terracotta-heading/dark-body colour split matches the Stone (surface-4) surface this sits on, per Section/Standard's documented convention.",
+          "deviations": "color/text-brand - the FIRST row of the original approved-34 list from Checkpoint 1 - had never been created across any prior component that could have used it, surfacing only on this, the last of the 16. Same recurring build hazard as five prior components."
+        },
+        "Gallery/Grid": {
+          "nodeId": "112:6",
+          "key": "5db765df8ec7c65d9613c733583c4e7981bd311d",
+          "page": "Patterns (36:3)",
+          "variants": "none — one repeating tile, 10 real instances on /gallery",
+          "size": "642.31x643.31",
+          "properties": [
+            "none — a placeholder fill; the page composes 10 real photos into a 2-column grid, not this component"
+          ],
+          "bindings": "Single square tile matching the live .gallery-grid-item exactly (642.3x643.3, object-fit:cover, radius 0). Same pattern as List/AmenityItem: one repeating item, the grid itself (2 columns, space/gallery-gap 54px between tiles) is a page-level composition.",
+          "deviations": "No links, no lightbox - confirmed directly (isLink:false on every tile), matching the finding already on record. Placeholder fill, not real photography, same treatment as every other image slot this run."
+        },
+        "Embed/Calendar": {
+          "nodeId": "112:9",
+          "key": "67f6c58a5b675631e054226979f7af73473bbf03",
+          "page": "Patterns (36:3)",
+          "variants": "none",
+          "size": "776x631",
+          "properties": [
+            "none"
+          ],
+          "bindings": "A labelled placeholder frame at the measured container size (.sqs-block.website-component-block, 776x631 on /availability), fill surface-4. Carries a visible text note naming what it represents and why it stops there, rather than a silent empty box.",
+          "deviations": "Deliberately container-only, per the brief's explicit instruction. The live embed is a cross-origin Google Calendar iframe (778x602) whose internals (contentDocument) are blocked from inspection - confirmed at Checkpoint 0, not re-litigated. No calendar UI, no interactivity, no attempt to approximate Google Calendar's interface."
+        }
+      },
+      "pages": {
+        "Foundation": "0:1",
+        "Global": "36:2",
+        "Patterns": "36:3",
+        "Provenance": "36:4"
+      },
+      "designSystemConventions": {
+        "Section/Standard": {
+          "decision": "NOT built as a standalone Figma component. Decided by Ryan at Gate A, run 3, after measurement showed it would ship as an empty shell with no content of its own - unlike every other component in this file, which has real content (a title, a nav item, an address). Recorded here as a convention instead: the remaining page-specific components (List/AmenityItem, Plan/Membership, Profile/Person, Profile/Pet, Gallery/Grid, Gallery/Reel) each bake these shell properties directly into their own parent frame when built.",
+          "themeValues": "Dark (color/surface-1, #495a58), White (color/surface-3, #ffffff), Stone (color/surface-4, #e5e3dc) - measured across Amenities' grid section, Membership/Home's white sections, and Residents' pet section (data-section-theme='light-bold'). Brand does NOT appear on any generic content section - only on Hero/Full and Footer/Contact, both already separate components. This corrects the Checkpoint-1 guess of Theme(Brand|Dark|Light): 'Light' was the wrong name for what is actually a distinct third surface (Stone), and Brand was never a real value here.",
+          "bleedValues": "Full (edge space/grid-edge 32.1953, column ~45.23px, spans the full 1425px content width) and Inset (same edge, narrower column ~41.6-42.26px, spans ~1338-1353px) - a genuine second axis, confirmed on the /amenities amenity-item grid section (Inset) versus every other measured section (Full). Not modelled as Figma variants of a component; recorded here for whichever page-specific component needs it.",
+          "tokens": "space/section-y (47.52, standard), space/section-y-lg (95.04, content-dense grid sections - Amenities amenity grid, Membership plan section), space/grid-edge (32.1953), space/grid-gutter (11). One outlier not resolved: Home's 'About the Studio' section measures 0px content-wrapper padding on a Dark/Full section, unexplained by a single measurement and not chased further since Home's interior text sections are not named in the approved 16-component checklist."
         }
       }
     }
   },
   "sync": {
     "tool": "figma-mcp",
-    "lastSync": "2026-08-31T19:04:46Z",
-    "syncedBy": "claude-code (Design role), authorized by Ryan"
-  }
+    "lastSync": "2026-09-01T16:50:00Z",
+    "syncedBy": "claude-code (Design role), authorized by Ryan — publish confirmed via key-import test (4/4 run-3 component keys resolved through figma.importComponentByKeyAsync/importComponentSetByKeyAsync, which only succeed against published keys)"
+  },
+  "pendingPublish": "RESOLVED 2026-09-01: Ryan published the library from the Figma UI. Confirmed via key-import test rather than a self-report - figma.publishAsync does not exist and no MCP tool reads a definitive publish timestamp, so importComponentByKeyAsync/importComponentSetByKeyAsync were run against four of this run's new component keys (Link/Inline, Nav/Header, List/AmenityItem, Icon/Instagram); all four resolved, which only happens against published keys. design/tokens/studio810/tokens.json has been synced from the published state - all 82 variables and 10 text styles, verified against drift-check, contracts and poc-builder.",
+  "buildHazards": [
+    "Figma's clone() does not carry componentPropertyReferences: cloned variants silently lose their TEXT property and must have it reassigned. Hit on Button/Primary Size=Compact.",
+    "Setting textDecoration directly on a TEXT node that has a text style applied is silently discarded - the style owns the property. This is why UI/Link exists rather than node-level decoration.",
+    "setBoundVariable() with an undefined variable silently no-ops rather than throwing. Nine Checkpoint-1 tokens had been approved but never created, so every padding bind on Nav/Header quietly did nothing. Every build now asserts each token resolves and throws on a miss.",
+    "A manifest-update script for List/AmenityItem (commit 2fe26e7) read a stale on-disk copy of design/figma.manifest.json rather than the actual current state, silently discarding 9 of 12 component set entries and three top-level fields (pendingPublish, buildHazards, designSystemConventions) that a prior commit had already added. Not caught until the run-3 close-out, four commits later. Nothing was unrecoverable - full state existed in git history - but every subsequent manifest-write script now diffs component-set and variable counts against expectation before committing, rather than trusting the read."
+  ],
+  "provenanceBackfill": "Close-out, run 3: all 34 pre-run-3 variables (published in runs 1-2 with empty descriptions) were backfilled with provenance reconstructed from verified cross-referenced usage across every component built this run - NOT the original run 1-2 measurement notes, which were never recorded in Figma and are lost. Each description says so explicitly. Two items (text-accent, border/hairline) are honestly flagged as unconsumed by anything built this run rather than given invented provenance."
 }
